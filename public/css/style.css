@@ -1,0 +1,19 @@
+.navbar {
+	z-index: 100;
+	color: white;
+}
+#hero-element {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	background-image: url('http://localhost:3000/img/hero-element-background.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	color: whitesmoke;
+	padding: 10%;
+}
+
+hr {
+	border-color: aquamarine;
+}
