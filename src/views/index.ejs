@@ -1,110 +1,120 @@
-<!DOCTYPE html>  
-<html lang="en">  
+<!DOCTYPE html>
+<html lang="en">
 
-<head>  
-		<title><%=title%></title>
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-		<link rel="stylesheet" href="css/style.css">
-</head>  
+<head>
+    <title>
+        <%=title%>
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
-<body>  
-	<nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-		<a class="navbar-brand" href="/"><%=title%></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <a class="navbar-brand" href="/">
+            <%=title%>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<%for(var i=0;i<navMenu.length;i++) {%>
-				<li class="nav-item ">
-					<a class="nav-link" href="<%=navMenu[i].href%>"><%=navMenu[i].text%></a>
-				</li>
-				<%}%>
-			</ul>
-			
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="text" placeholder="Enter Username" aria-label="Login" id="lgn-uname">
-				<input class="form-control mr-sm-2" type="password" placeholder="Enter Password" aria-label="Login" id="lgn-password">
-				<button class="btn btn-outline-info my-2 my-sm-0" type="button" id="btn-signin">Login</button>
-			</form>
-		</div>
-	</nav>
-	<div id="hero-element">
-		<div class="container">
-			<h1 class="display-4"><%=title%></h1>
-			<p class="lead"><%=heading%></p>
-			<hr class="my-4">
-			<p>Get started now and experience the power of blockchain in reviewing conference papers</p>
-			<button type="button" class="btn btn-lg btn-info" data-toggle="modal" data-target="#exampleModalCenter">Register Now</button>
-		</div>	
-	</div>
-	
-	<!--	Modal -->
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">Register</h5>
-					<button type="submit" class="close" data-dismiss="modal" aria-label="Close">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <%for(var i=0;i<navMenu.length;i++) {%>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="<%=navMenu[i].href%>">
+                            <%=navMenu[i].text%>
+                        </a>
+                    </li>
+                    <%}%>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0" action="/" method="POST">
+                <input class="form-control mr-sm-2" type="text" placeholder="Enter Username" aria-label="Login" id="lgn-uname" name="username">
+                <input class="form-control mr-sm-2" type="password" placeholder="Enter Password" aria-label="Login" id="lgn-password" name="password">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit" id="btn-signin">Login</button>
+            </form>
+        </div>
+    </nav>
+    <div id="hero-element">
+        <div class="container">
+            <h1 class="display-4">
+                <%=title%>
+            </h1>
+            <p class="lead">
+                <%=heading%>
+            </p>
+            <hr class="my-4">
+            <p>Get started now and experience the power of blockchain in reviewing conference papers</p>
+            <button type="button" class="btn btn-lg btn-info" data-toggle="modal" data-target="#exampleModalCenter">Register Now</button>
+        </div>
+    </div>
+
+    <!--	Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Register</h5>
+                    <button type="submit" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="firstName">First Name</label>
-								<input type="text" class="form-control" id="firstName" placeholder="First Name" required>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="lastName">Last Name</label>
-								<input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-12">
-								<label for="userName">Username</label>
-								<input type="text" class="form-control" id="userName" placeholder="Username" required>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-12">
-								<label for="Email">Email</label>
-								<input type="email" class="form-control" id="Email" placeholder="Email" required>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="Password">Password</label>
-								<input type="password" class="form-control" id="Password" placeholder="Password" required>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="rPassword">Re-type Password</label>
-								<input type="password" class="form-control" id="rPassword" placeholder="Re-type Password" required>
-							</div>
-						</div>
-						<button class="btn btn-info" type="button" id="btn-signup" data-dismiss="modal">Sign Up</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>	
-	
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	
-	<script type="text/javascript" src="js/navbar.js"></script>
-	<script type="text/javascript" src="js/register.js"></script>
-	<script type="text/javascript" src="js/login.js"></script>
-	
-	
-</body>  
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="firstName">First Name</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="userName">Username</label>
+                                <input type="text" class="form-control" id="userName" placeholder="Username" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="Email">Email</label>
+                                <input type="email" class="form-control" id="Email" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="Password">Password</label>
+                                <input type="password" class="form-control" id="Password" placeholder="Password" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="rPassword">Re-type Password</label>
+                                <input type="password" class="form-control" id="rPassword" placeholder="Re-type Password" required>
+                            </div>
+                        </div>
+                        <button class="btn btn-info" type="button" id="btn-signup" data-dismiss="modal">Sign Up</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-</html>  
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script type="text/javascript" src="js/navbar.js"></script>
+    <script type="text/javascript" src="js/register.js"></script>
+    <!-- <script type="text/javascript" src="js/login.js"></script> -->
+
+
+</body>
+
+</html>
