@@ -2,12 +2,12 @@
 Blockchain based peer review system for conference papers
 
 # Creating a Private Single Geth Node
-- `mkdir datadir`
-- `geth --datadir ./datadir init init.json`
-- `geth --datadir ./datadir --networkid 2019 --rpc --rpcport 8545 --rpcaddr 127.0.0.1 --rpccorsdomain "*" --rpcapi "eth,net,web3,personal,miner"`
+1. ```mkdir datadir```
+2. ```geth --datadir ./datadir init init.json```
+3. ```geth --datadir ./datadir --networkid 2019 --rpc --rpcport 8545 --rpcaddr 127.0.0.1 --rpccorsdomain "*" --rpcapi "eth,net,web3,personal,miner"```
 
 # Attaching to Geth IPC
-- `geth attach ./datadir/geth.ipc
+```geth attach ./datadir/geth.ipc```
 
 # References
 - [C# Corner](https://www.c-sharpcorner.com/article/building-web-application-using-node-js/)
