@@ -50,11 +50,16 @@ app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
-    res.render('index', {
-        title: "SmartReviewer",
-        heading: "The next generation conference paper reviewing system",
-        navMenu: menu
-    });
+    if (req.user) {
+        res.redirect('/u');
+    } else {
+        res.render('index', {
+            title: "SmartReviewer",
+            heading: "The next generation conference paper reviewing system",
+            navMenu: menu
+        });
+    }
+
 });
 
 app.post('/',
