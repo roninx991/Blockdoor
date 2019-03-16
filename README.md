@@ -38,3 +38,4 @@ Run the following commands on Geth console-
 - [Web3js NPM](https://www.npmjs.com/package/web3)
 - [Hackernoon](https://hackernoon.com/set-up-a-private-ethereum-blockchain-and-deploy-your-first-solidity-smart-contract-on-the-caa8334c343d)
 - [Medium Private Network Cluster using Geth](https://medium.com/@yashwanthvenati/setup-private-ethereum-blockchain-network-with-multiple-nodes-in-5-mins-708ab89b1966)
+- [Medium IPFS](https://medium.com/coinmonks/a-hands-on-introduction-to-ipfs-ee65b594937)
