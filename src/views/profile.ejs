@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="css/upload.css">
+   <!--  <script src="https://unpkg.com/ipfs-api/dist/index.min.js"></script>
+    <script src="https://npmcdn.com/ipfs-api/dist/index.js"></script> -->
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -117,12 +119,20 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        ...
+	        <form class="form" action="/upload" method="POST" enctype = "multipart/form-data">
+			    <div class="file-upload-wrapper" data-text="Select your file!">
+			     	 <input name="file" id="file" type="file" class="file-upload-field">
+			    </div>
+			    <br>
+			    <!--   -->
+			    <br>
+			   		 <input class="btn btn-danger btn-lg" id="btn-upload" type = "submit" value="Confirm" />
+			</form>
 	      </div>
-	      <div class="modal-footer">
+	      <!-- <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary">Save changes</button>
-	      </div>
+	      </div> -->
 	    </div>
 	  </div>
 	</div>
@@ -133,7 +143,12 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="text/javascript" src="js/navbar.js"></script>
-
+    <script type="text/javascript" src="js/upload.js"></script>
+<script type="text/javascript">
+  $("form").on("change", ".file-upload-field", function(){ 
+    $(this).parent(".file-upload-wrapper").attr("data-text",         $(this).val().replace(/.*(\/|\\)/, '') );
+});
+</script>
 </body>
 
 </html>
