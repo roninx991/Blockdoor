@@ -72,10 +72,13 @@ require('./src/configuration/passport')(app, passport);
 var registerRouter = require('./src/routes/registrationRoute')(web3);
 var profileRouter = require('./src/routes/profileRoute')(menu);
 var uploadRouter = require('./src/routes/uploadRoute')();
+var reviewerRouter = require('./src/routes/reviewerRoute')(menu);
+var yesnoRouter = require('./src/routes/yesnoRoute')();
 
 app.use('/register', registerRouter);
 app.use('/upload', uploadRouter);
-app.use('/u', profileRouter);
+app.use('/u', reviewerRouter);
+app.use('/review',yesnoRouter)
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');

@@ -41,13 +41,13 @@ var u_router = function(web3) {
                             const Submissions = db.collection('Submissions');
                             Submissions.insertOne({owner: req.user._id, hash: file[0].hash,timestamp: new Date(Date.now()).toISOString(), status:'Pending'}, function(err, result) {
                                 if(err == undefined) {
-                                    console.log("Success");
+                                    console.log("Successfully uploaded File");
                                 }
                                 else console.log(err);
                             });
                         });
                     }
-                    res.send('File uploaded!');
+                    res.redirect("/u");
                 });
             });
         });            
