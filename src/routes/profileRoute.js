@@ -9,7 +9,8 @@ var p_router = function(menu) {
             } else {
                 res.render('profile', {
                     title: "SmartReviewer",
-                    navMenu: menu
+                    navMenu: menu,
+                    user: req.user
                 });
             }
         });

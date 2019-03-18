@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/upload.css">
+   <!--  <script src="https://unpkg.com/ipfs-api/dist/index.min.js"></script>
+    <script src="https://npmcdn.com/ipfs-api/dist/index.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -31,60 +35,107 @@
             </ul>
         </div>
     </nav>
-
-    <!--	Modal -->
-    <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">Register</h5>
-					<button type="submit" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="firstName">First Name</label>
-								<input type="text" class="form-control" id="firstName" placeholder="First Name" required>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="lastName">Last Name</label>
-								<input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-12">
-								<label for="userName">Username</label>
-								<input type="text" class="form-control" id="userName" placeholder="Username" required>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-12">
-								<label for="Email">Email</label>
-								<input type="email" class="form-control" id="Email" placeholder="Email" required>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="Password">Password</label>
-								<input type="password" class="form-control" id="Password" placeholder="Password" required>
-							</div>
-							<div class="form-group col-md-6">
-								<label for="rPassword">Re-type Password</label>
-								<input type="password" class="form-control" id="rPassword" placeholder="Re-type Password" required>
-							</div>
-						</div>
-						<button class="btn btn-info" type="button" id="btn-signup" data-dismiss="modal">Sign Up</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
+	<div class="row">
+			
+		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+			<div class="card">
+			  <img class="card-img-top" style="height:60%;" src="/img/Avatar.png" alt="Card image cap">
+			  <div class="card-body">
+			   <center>
+			   		<h3 class="card-title"><strong><%=user.uname%></strong></h3>
+			   	</center>
+			  </div>
+			  <ul class="list-group list-group-flush">
+			    <li class="list-group-item">Name : <%=user.fname%>&nbsp;<%=user.lname%>  </li>
+			    <li class="list-group-item">Email Id : <%=user.email%> </li>
+			    <!-- <li class="list-group-item">Public Key : <%=user.address%></li>  -->
+			    <li class="list-group-item">Account Balance : </li>
+			  </ul>
+			  
 			</div>
+			<!-- <center>
+				<div class="avatar">
+					<img src="">
+				</div>
+				<div class="username">
+					<h4><strong><i><%=user.fname%></i></strong></h4>
+				</div>
+				
+			</center> -->
 		</div>
-	</div>	 -->
+
+		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+			<br>
+				<center><h3>My Submissions</h3></center>
+			<br>
+
+			<table class="table-fill">
+				<thead>
+					<tr>
+					<th class="text-left" style="width:60%;">Hash Value</th>
+					<th class="text-left" style="width:20%;">Timestamp</th>
+					<th class="text-left">Status</th>
+					</tr>
+				</thead>
+				<tbody class="table-hover">
+					<tr>
+						<td class="text-left">ABC</td>
+						<td class="text-left" id="accuracy">{{ result[0] }}</td>
+						<td class="text-left" id="accuracy">{{ result[0] }}</td>
+					</tr>
+					<tr>
+						<td class="text-left">DEF</td>
+						<td class="text-left" id="predictedw1">{{ result[8] }}</td>
+						<td class="text-left" id="accuracy">{{ result[0] }}</td>
+					</tr>
+					<tr>
+						<td class="text-left">XYZ</td>
+						<td class="text-left" id="salvage">{{ result[7] }}</td>
+						<td class="text-left" id="accuracy">{{ result[0] }}</td>
+					</tr>
+				
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+
+
+	<div id="upload-doc" data-toggle="modal" data-target="#exampleModal">
+		<span>Upload</span>
+		<button type="button" id="upload-button" data-toggle="modal" data-target="#exampleModal">
+			<h2>+</h2>
+		</button>
+	</div>
+
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Upload New Document</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form class="form" action="/upload" method="POST" enctype = "multipart/form-data">
+			    <div class="file-upload-wrapper" data-text="Select your file!">
+			     	 <input name="file" id="file" type="file" class="file-upload-field">
+			    </div>
+			    <br>
+			    <!--   -->
+			    <br>
+			   		 <input class="btn btn-danger btn-lg" id="btn-upload" type = "submit" value="Confirm" />
+			</form>
+	      </div>
+	      <!-- <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div> -->
+	    </div>
+	  </div>
+	</div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
@@ -92,7 +143,12 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="text/javascript" src="js/navbar.js"></script>
-
+    <script type="text/javascript" src="js/upload.js"></script>
+<script type="text/javascript">
+  $("form").on("change", ".file-upload-field", function(){ 
+    $(this).parent(".file-upload-wrapper").attr("data-text",         $(this).val().replace(/.*(\/|\\)/, '') );
+});
+</script>
 </body>
 
 </html>
