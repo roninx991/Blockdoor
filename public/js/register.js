@@ -8,6 +8,7 @@ $(document).ready(function(){
 			uname: $("#userName").val(),
 			email: $("#Email").val(),
 			pwd: $("#Password").val(),
+			type: "0",
 		}
 		
 		if(validate(register_data)){
