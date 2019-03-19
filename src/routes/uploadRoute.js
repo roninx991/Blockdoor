@@ -38,14 +38,22 @@ var u_router = function(web3) {
                             const db = client.db('NodeDemoWebApp');
                             // const Users = db.collection('Users');
                             const Submissions = db.collection('Submissions');
+<<<<<<< HEAD
                             Submissions.insertOne({ owner: req.user._id, hash: file[0].hash, timestamp: new Date(Date.now()).toISOString(), status: 'Pending' }, function(err, result) {
                                 if (err == undefined) {
                                     console.log("Success");
                                 } else console.log(err);
+=======
+                            Submissions.insertOne({owner: req.user._id, hash: file[0].hash,timestamp: new Date(Date.now()).toISOString(), status:'Pending'}, function(err, result) {
+                                if(err == undefined) {
+                                    console.log("Successfully uploaded File");
+                                }
+                                else console.log(err);
+>>>>>>> 94b6b587b57a998f8fdc422f470ec7edf34054a7
                             });
                         });
                     }
-                    res.send('File uploaded!');
+                    res.redirect("/u");
                 });
             });
         });
