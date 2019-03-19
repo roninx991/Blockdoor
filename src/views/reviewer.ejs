@@ -33,10 +33,7 @@
                     <a class="nav-link" href="#">Sell SATs
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Become a Reviewer
-                    </a>
-                </li>
+               
             </ul>
         </div>
     </nav>
@@ -143,22 +140,27 @@
                     <table class="table-fill">
                         <thead>
                             <tr>
-                                <th class="text-left" style="width:85%;">Hash Value</th>
+                            <th class="text-left" style="width:5%;">Sr. No. </th>
+                                <th class="text-left" >Hash Value</th>
 
-                                <th class="text-left">Status</th>
+                                <th class="text-left">Info</th>
                             </tr>
                         </thead>
                         <tbody class="table-hover">
                             <%for(var i=0;i<reviewed.length;i++){%>
                                 <tr>
+                                <td class="text-left" id="accuracy"><%= i %></td>
                                     <td class="text-left" id="hash">
                                         <a target="_blank" href="http://localhost:8080/ipfs/<%=reviewed[i].hash%>">
                                             <%=reviewed[i].hash%>
                                         </a>
                                     </td>
-                                    <td class="text-left" id="accuracy"></td>
+                                <td><a class="btn btn-sm btn-success" data-toggle="modal" data-target="#review-contents" id="yes" onclick="$('#marks').html('<%=content[i].reviews[0].Marks%>');$('#comments').html('<%=content[i].reviews[0].Comments%>');">Review</a></td>
                                 </tr>
                                 <%}%>
+                                <tr>
+                                    <td><%=content[0].reviews[0].Comments%></td>
+                                </tr>
 
                         </tbody>
                     </table>
@@ -228,6 +230,22 @@
         </div>
     </div>
 
+
+<div class="modal fade" id="review-contents" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reviewed Details</h5>
+                </div>
+                <div class="modal-body">
+                    <ul style="list-style-type: none;">
+                        <li><strong>Marks : </strong><span id="marks"></span></li>
+                        <li><strong>Comments : </strong><span id="comments"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

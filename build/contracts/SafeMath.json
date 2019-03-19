@@ -3274,8 +3274,8 @@
     "version": "0.5.2+commit.1df8f40c.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.1",
-  "updatedAt": "2019-03-18T19:41:47.452Z",
+  "schemaVersion": "3.0.3",
+  "updatedAt": "2019-03-19T06:55:47.753Z",
   "devdoc": {
     "details": "Unsigned math operations with safety checks that revert on error",
     "methods": {},
