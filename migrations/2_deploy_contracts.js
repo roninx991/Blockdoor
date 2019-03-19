@@ -1,5 +1,5 @@
-const Storage = artifacts.require("Storage");
+const Token = artifacts.require("SARAToken");
 
 module.exports = function(deployer) {
-  deployer.deploy(Storage);
+    deployer.deploy(Token);
 };

@@ -15,42 +15,40 @@ var u_router = function(web3) {
 
             // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
             let sampleFile = req.files.file;
-            
+
             var fname = req.files.file.name;
-            var pathname = 'public/static/'+fname; 
+            var pathname = 'public/static/' + fname;
             // Use the mv() method to place the file somewhere on your server
             sampleFile.mv(pathname, function(err) {
                 if (err)
-                  return res.status(500).send(err);
-                
+                    return res.status(500).send(err);
+
                 let testFile = fs.readFileSync(pathname);
                 let testBuffer = new Buffer.from(testFile);
-                                
-                ipfs.files.add(testBuffer, function (err, file) {
+
+                ipfs.files.add(testBuffer, function(err, file) {
                     if (err) {
                         console.log(err);
-                    }
-                    else{
+                    } else {
                         // console.log(req);
                         const url = 'mongodb://localhost:27017';
                         mongodb.connect(url, { useNewUrlParser: true }, function(err, client) {
                             console.log("Successfully connected to database.");
-                            
+
                             const db = client.db('NodeDemoWebApp');
                             // const Users = db.collection('Users');
                             const Submissions = db.collection('Submissions');
-                            Submissions.insertOne({owner: req.user._id, hash: file[0].hash,timestamp: new Date(Date.now()).toISOString(), status:'Pending'}, function(err, result) {
-                                if(err == undefined) {
+                            Submissions.insertOne({ owner: req.user._id, hash: file[0].hash, timestamp: new Date(Date.now()).toISOString(), status: 'Pending' }, function(err, result) {
+                                if (err == undefined) {
                                     console.log("Success");
-                                }
-                                else console.log(err);
+                                } else console.log(err);
                             });
                         });
                     }
                     res.send('File uploaded!');
                 });
             });
-        });            
+        });
     return uploadRouter;
 }
 module.exports = u_router;
