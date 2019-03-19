@@ -84,5 +84,9 @@ app.post('/',
     passport.authenticate('local', { failureRedirect: '/' }),
     function(req, res) {
         console.log("Success");
-        res.redirect('/u');
+        if (req.user.type == 0) {
+            res.redirect('/p');
+        } else {
+            res.redirect('/u');
+        }
     });

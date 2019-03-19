@@ -56,8 +56,8 @@ var u_router = function(web3) {
                             const db = client.db('NodeDemoWebApp');
                             // const Users = db.collection('Users');
                             const Submissions = db.collection('Submissions');
-                           
-                            Submissions.insertOne({ owner: req.user._id, hash: file[0].hash, timestamp: new Date(Date.now()).toISOString(), status: 'Pending',domain:req.body.domain }, function(err, result) {
+
+                            Submissions.insertOne({ owner: req.user._id, hash: file[0].hash, timestamp: new Date(Date.now()).toISOString(), status: 'Pending', domain: req.body.domain }, function(err, result) {
                                 if (err == undefined) {
                                     console.log("Successfully uploaded File");
 
@@ -89,7 +89,7 @@ var u_router = function(web3) {
                             });
                         });
                     }
-                    res.redirect("/u");
+                    res.redirect("/p");
                 });
             });
         });
