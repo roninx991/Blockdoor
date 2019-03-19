@@ -134,8 +134,18 @@
                     <div class="modal-body">
                         <form class="form" action="/upload" method="POST" enctype="multipart/form-data">
                             <div class="file-upload-wrapper" data-text="Select your file!">
-                                <input name="file" id="file" type="file" class="file-upload-field">
+                                <input name="file" id="file" type="file" class="file-upload-field" required>
                             </div>
+
+                            <select name="domain" required="Please Select One">
+                            	<option val="Machine Learning">Machine Learning</option>
+                            	<option val="Blockchain">BlockChain</option>
+                            	<option val="Cloud Computing">Cloud Computing</option>
+                            	<option val="Artificial Intelligence">Artificial Intelligence</option>
+                            	<option val="Cyber Security">Cyber Security</option>
+                            	<option val="Computer Networks">Computer Networks</option>
+                            	<option val="Digital Signal Processing">Digital Signal Processing</option>
+                            </select>
                             <br>
                             <!--   -->
                             <br>

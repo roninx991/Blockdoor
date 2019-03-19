@@ -47,25 +47,36 @@ var p_router = function() {
                 mongodb.connect(url, { useNewUrlParser: true }, function(err, client) {
                     const db = client.db('NodeDemoWebApp');
                     const Submissions = db.collection('Submissions');
-                    var review;
+                    var review, review_content;
+
                     Submissions.find({ "reviews.Reviewerid": req.user._id }).toArray(function(err, reviews) {
                         review = reviews;
+                        //console.log(review[0]);
                     });
 
-                    Submissions.find({ "reviews.Reviewerid": { $ne: req.user._id } }).toArray(function(err, ans) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            res.render('reviewer', {
-                                title: "SmartReviewer",
-                                navMenu: menu,
-                                user: req.user,
-                                sub: ans,
-                                balance: bal,
-                                reviewed: review
-                            });
-                        }
+                    Submissions.find({ "reviews.Reviewerid": req.user._id }, { 'reviews.$': true }).toArray(function(err, ans1) {
+                        review_content = ans1;
+                        console.log("Review Content 1", review_content);
+                        Submissions.find({ "reviews.Reviewerid": { $ne: req.user._id } }).toArray(function(err, ans) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                res.render('reviewer', {
+                                    title: "SmartReviewer",
+                                    navMenu: menu,
+                                    user: req.user,
+                                    sub: ans,
+                                    balance: bal,
+                                    reviewed: review,
+                                    content: review_content
+                                });
+                                console.log(review_content);
+                            }
+                        });
                     });
+                    //console.log("Review Content 2", review_content);
+
+
                 });
             }
         });
