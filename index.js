@@ -53,7 +53,8 @@ var yesnoRouter = require('./src/routes/yesnoRoute')();
 app.use('/register', registerRouter);
 app.use('/upload', uploadRouter);
 app.use('/u', reviewerRouter);
-app.use('/review',yesnoRouter)
+app.use('/review', yesnoRouter);
+app.use('/p', profileRouter);
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
