@@ -23,10 +23,19 @@ var st_router = function(web3) {
 
                 }).then(function(result) {
                     console.log(result.toString());
-                    res.redirect("/u");
+                    if (req.user.type == 0) {
+                        res.redirect('/p');
+                    } else {
+                        res.redirect('/u');
+                    }
 
                 }).catch(function(error) {
                     console.log(error);
+                    if (req.user.type == 0) {
+                        res.redirect('/p');
+                    } else {
+                        res.redirect('/u');
+                    }
                 });
             }
         });
