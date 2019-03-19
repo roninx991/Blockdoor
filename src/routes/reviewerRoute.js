@@ -50,7 +50,6 @@ var p_router = function() {
                     var review;
                     Submissions.find({ "reviews.Reviewerid": req.user._id }).toArray(function(err, reviews) {
                         review = reviews;
-                        console.log(review);
                     });
 
                     Submissions.find({ "reviews.Reviewerid": { $ne: req.user._id } }).toArray(function(err, ans) {
@@ -65,8 +64,6 @@ var p_router = function() {
                                 balance: bal,
                                 reviewed: review
                             });
-                            console.log(review);
-
                         }
                     });
                 });

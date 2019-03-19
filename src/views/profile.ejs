@@ -25,13 +25,18 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <%for(var i=0;i<navMenu.length;i++) {%>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="<%=navMenu[i].href%>">
-                            <%=navMenu[i].text%>
+                <li class="nav-item" data-toggle="modal" data-target="#buyToken">
+                    <a class="nav-link" href="#">Buy SATs
                         </a>
-                    </li>
-                    <%}%>
+                </li>
+                <li class="nav-item" data-toggle="modal" data-target="#sellToken">
+                    <a class="nav-link" href="#">Sell SATs
+                        </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Become a Reviewer
+                        </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -137,10 +142,40 @@
                             <input class="btn btn-danger btn-lg" id="btn-upload" type="submit" value="Confirm" />
                         </form>
                     </div>
-                    <!-- <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
-	      </div> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="buyToken" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Buy SATs</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form" action="/buyTokens" method="POST">
+                            <label>Buy Tokens: </label>
+                            <input id="buyT" name="buyT" type="number" max=100 min=1>
+                            <input class="btn btn-info btn-lg" id="btn-upload" type="submit" value="Confirm" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="sellToken" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Sell SATs</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form" action="/sellTokens" method="POST">
+                            <label>Sell Tokens: </label>
+                            <input id="sellT" name="sellT" type="number" max=<%=balance%> min=1>
+                            <input class="btn btn-info btn-lg" id="btn-upload" type="submit" value="Confirm" />
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

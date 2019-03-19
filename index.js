@@ -48,8 +48,8 @@ var registerRouter = require('./src/routes/registrationRoute')(web3);
 var profileRouter = require('./src/routes/profileRoute')();
 var reviewerRouter = require('./src/routes/reviewerRoute')();
 
-var uploadRouter = require('./src/routes/uploadRoute')();
-var yesnoRouter = require('./src/routes/yesnoRoute')();
+var uploadRouter = require('./src/routes/uploadRoute')(web3);
+var yesnoRouter = require('./src/routes/yesnoRoute')(web3);
 var buyTRouter = require('./src/routes/buyTRoute')(web3);
 var sellTRouter = require('./src/routes/sellTRoute')(web3);
 

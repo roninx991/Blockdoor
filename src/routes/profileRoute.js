@@ -59,8 +59,6 @@ var p_router = function() {
                                 sub: ans,
                                 balance: bal
                             });
-                            console.log(ans);
-
                         }
                     });
                 });

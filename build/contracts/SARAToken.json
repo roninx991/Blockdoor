@@ -1095,12 +1095,12 @@
         }
       },
       "links": {},
-      "address": "0x3cB8b8512C2DE55cb098eAe6B8A8a6B27AB78d38",
-      "transactionHash": "0xf3f47fc45825e19dbcd226e41216eef395d30dd7ecec69e904d3b2d2fb28784b"
+      "address": "0x50294818207CF86a4c495aaCA970f6745Bf8415A",
+      "transactionHash": "0x6d3c721f611986f530b8104a9c4855ef5781bb34c1cd927b78ff7aef32e41ba7"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-03-19T05:28:42.817Z",
+  "updatedAt": "2019-03-19T14:57:36.574Z",
   "devdoc": {
     "methods": {
       "allowance(address,address)": {

@@ -5,6 +5,22 @@ var date = new Date();
 var express = require('express');
 var mongodb = require('mongodb').MongoClient;
 
+var Web3 = require('web3');
+var Contract = require('truffle-contract');
+var path = require('path');
+
+var provider = new Web3.providers.HttpProvider("http://localhost:8545");
+
+// SAT Contract
+var SATContractJSON = require(path.join(__dirname, '../../build/contracts/SARAToken.json'));
+var SATContract = Contract(SATContractJSON);
+SATContract.setProvider(provider);
+
+// Main Contract
+var MainContractJSON = require(path.join(__dirname, '../../build/contracts/MainContract.json'));
+var MainContract = Contract(MainContractJSON);
+MainContract.setProvider(provider);
+
 var uploadRouter = express.Router();
 var u_router = function(web3) {
     uploadRouter.route("/")
@@ -26,6 +42,8 @@ var u_router = function(web3) {
                 let testFile = fs.readFileSync(pathname);
                 let testBuffer = new Buffer.from(testFile);
 
+                // console.log(web3);
+
                 ipfs.files.add(testBuffer, function(err, file) {
                     if (err) {
                         console.log(err);
@@ -41,6 +59,31 @@ var u_router = function(web3) {
                             Submissions.insertOne({ owner: req.user._id, hash: file[0].hash, timestamp: new Date(Date.now()).toISOString(), status: 'Pending' }, function(err, result) {
                                 if (err == undefined) {
                                     console.log("Successfully uploaded File");
+
+                                    SATContract.deployed().then(function(instance) {
+                                        web3.personal.unlockAccount(req.user.address, req.user.pwd);
+                                        return instance.transfer(web3.eth.accounts[0], 100, { from: req.user.address, gas: 100000 });
+
+                                    }).then(function(result) {
+                                        console.log("This is SAT contract");
+                                        console.log(result.toString());
+
+                                    }).catch(function(error) {
+                                        console.log(error);
+                                    });
+
+                                    MainContract.deployed().then(function(instance) {
+                                        web3.personal.unlockAccount(web3.eth.accounts[0], "Pink#4119");
+                                        return instance.newSubmission(req.user.address, file[0].hash, { from: web3.eth.accounts[0], gas: 100000 });
+
+                                    }).then(function(result) {
+                                        console.log("This is main contract")
+                                        console.log(result.toString());
+
+                                    }).catch(function(error) {
+                                        console.log(error);
+                                    });
+
                                 } else console.log(err);
                             });
                         });

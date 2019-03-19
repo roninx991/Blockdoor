@@ -25,7 +25,7 @@ var bt_router = function(web3) {
                     console.log(result.toString());
                     res.redirect("/u");
 
-                }, function(error) {
+                }).catch(function(error) {
                     console.log(error);
                     res.redirect("/u");
                 });
