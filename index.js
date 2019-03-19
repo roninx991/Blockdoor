@@ -45,8 +45,8 @@ app.use(fileUpload());
 require('./src/configuration/passport')(app, passport);
 
 var registerRouter = require('./src/routes/registrationRoute')(web3);
-var profileRouter = require('./src/routes/profileRoute')();
-var reviewerRouter = require('./src/routes/reviewerRoute')();
+var profileRouter = require('./src/routes/profileRoute')(web3);
+var reviewerRouter = require('./src/routes/reviewerRoute')(web3);
 
 var uploadRouter = require('./src/routes/uploadRoute')(web3);
 var yesnoRouter = require('./src/routes/yesnoRoute')(web3);

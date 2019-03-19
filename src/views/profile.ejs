@@ -95,15 +95,15 @@
                     <%for(var i=0;i<sub.length;i++){%>
                         <tr>
                             <td class="text-left">
-                                <a target="_blank" href="http://localhost:8080/ipfs/<%=sub[i].hash%>">
-                                    <%=sub[i].hash%>
+                                <a target="_blank" href="http://localhost:8080/ipfs/<%=sub[i]%>">
+                                    <%=sub[i]%>
                                 </a>
                             </td>
                             <td class="text-left" id="accuracy">
-                                <%=sub[i].timestamp%>
+                                <%=details[i].timestamp%>
                             </td>
                             <td class="text-left" id="accuracy">
-                                <%=sub[i].status%>
+                                <%=details[i].status%>
                             </td>
                         </tr>
                         <%}%>
