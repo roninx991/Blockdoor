@@ -95,7 +95,7 @@
                     <%for(var i=0;i<sub.length;i++){%>
                         <tr>
                             <td class="text-left">
-                                <a target="_blank" href="http://localhost:8080/ipfs/<%=sub[i]%>">
+                                <a target="_blank" href="http://localhost:8080/ipfs/<%=sub[i].h%>">
                                     <%=sub[i].h%>
                                 </a>
                             </td>
@@ -205,15 +205,15 @@
         </script>
 
         <script type="text/javascript">
-            $(document).ready(function(){
-               
-
-                $('#btn-buy').click(function(){
-                     var x = $('#buyT').val();
+            $(document).ready(function() {
+                $('#btn-buy').click(function() {
+                    var x = $('#buyT').val();
                     alert(x);
-                    $.post('/buyTokens',{data:x},function(response){
-                            window.location.reload();
-                     });
+                    $.post('/buyTokens', {
+                        data: x
+                    }, function(response) {
+                        window.location.reload();
+                    });
                 });
             });
         </script>

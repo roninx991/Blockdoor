@@ -59,6 +59,7 @@ var u_router = function(web3) {
 
                             Submissions.insertOne({ owner: req.user._id, hash: file[0].hash, timestamp: new Date(Date.now()).toISOString(), status: 'Pending', domain: req.body.domain }, function(err, result) {
                                 if (err == undefined) {
+                                    console.log(result);
                                     console.log("Successfully uploaded File");
 
                                     SATContract.deployed().then(function(instance) {
@@ -74,7 +75,7 @@ var u_router = function(web3) {
                                     });
 
                                     MainContract.deployed().then(function(instance) {
-                                        web3.personal.unlockAccount(web3.eth.accounts[0], "Rohit@1997");
+                                        web3.personal.unlockAccount(web3.eth.accounts[0], "123456");
                                         console.log(file[0].hash);
                                         return instance.newSubmission(req.user.address, file[0].hash, { from: web3.eth.accounts[0] });
 

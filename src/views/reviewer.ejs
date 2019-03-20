@@ -33,7 +33,7 @@
                     <a class="nav-link" href="#">Sell SATs
                     </a>
                 </li>
-               
+
             </ul>
         </div>
     </nav>
@@ -134,15 +134,17 @@
                             </tr>
                         </thead>
                         <tbody class="table-hover">
-                            <%for(var i=0;i<sub.length;i++){%>
+                            <%for(var i=0;i<sub1.length;i++){%>
                                 <tr>
                                     <td class="text-left" id="hash">
-                                        <a target="_blank" href="http://localhost:8080/ipfs/<%=sub[i].hash%>">
-                                            <%=sub[i].hash%>
+                                        <a target="_blank" href="http://localhost:8080/ipfs/<%=sub1[i].hash%>">
+                                            <%=sub1[i].h%>
                                         </a>
                                     </td>
-                                    <td class="text-left"><%=sub[i].domain%></td>
-                                    <td class="text-left" id="accuracy"><button class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal" id="yes" onclick="$('#inputhash').val('<%=sub[i].hash%>');">Review</button></td>
+                                    <td class="text-left">
+                                        <%=sub1[i].domain%>
+                                    </td>
+                                    <td class="text-left" id="accuracy"><button class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal" id="yes" onclick="$('#inputhash').val('<%=sub1[i].h%>');">Review</button></td>
                                 </tr>
                                 <%}%>
 
@@ -151,7 +153,7 @@
 
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                 <select id="domain" value="All">
+                    <select id="domain" value="All">
                                 <option val="all" selected="">All</option>
                                 <option val="Machine Learning">Machine Learning</option>
                                 <option val="Blockchain">BlockChain</option>
@@ -165,27 +167,31 @@
                     <table class="table-fill" id="paper">
                         <thead>
                             <tr>
-                            <th class="text-left" style="width:5%;">Sr. No. </th>
-                                <th class="text-left" >Hash Value</th>  
+                                <th class="text-left" style="width:5%;">Sr. No. </th>
+                                <th class="text-left">Hash Value</th>
                                 <th class="text-left"> Domain</th>
 
                                 <th class="text-left">Info</th>
                             </tr>
                         </thead>
                         <tbody class="table-hover">
-                            <%for(var i=0;i<reviewed.length;i++){%>
+                            <%for(var i=0;i<sub2.length;i++){%>
                                 <tr>
-                                <td class="text-left" id="accuracy"><%= i %></td>
+                                    <td class="text-left" id="accuracy">
+                                        <%= i %>
+                                    </td>
                                     <td class="text-left" id="hash">
-                                        <a target="_blank" href="http://localhost:8080/ipfs/<%=reviewed[i].hash%>">
-                                            <%=reviewed[i].hash%>
+                                        <a target="_blank" href="http://localhost:8080/ipfs/<%=sub2[i].h%>">
+                                            <%=sub2[i].h%>
                                         </a>
                                     </td>
-                                    <td class="text-left"><%=reviewed[i].domain%></td>
-                                <td><a class="btn btn-sm btn-success" data-toggle="modal" data-target="#review-contents" id="yes" onclick="$('#marks').html('<%=content[i].reviews[0].Marks%>');$('#comments').html('<%=content[i].reviews[0].Comments%>');">Info</a></td>
+                                    <td class="text-left">
+                                        <%=sub2[i].domain%>
+                                    </td>
+                                    <td><a class="btn btn-sm btn-success" data-toggle="modal" data-target="#review-contents" id="yes" onclick="$('#marks').html('<%=sub2[i].reviews[0].Marks%>');$('#comments').html('<%=sub2[i].reviews[0].Comments%>');">Info</a></td>
                                 </tr>
                                 <%}%>
-                               
+
 
                         </tbody>
                     </table>
@@ -229,7 +235,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Buy SATs</h5>
                 </div>
                 <div class="modal-body">
-                    <form class="form" action="/" >
+                    <form class="form" action="/">
                         <label>Buy Tokens: </label>
                         <input id="buyT" name="buyT" type="number" max=100 min=1>
                         <input class="btn btn-info btn-lg" id="btn-buy" type="button" value="Confirm" />
@@ -257,7 +263,7 @@
     </div>
 
 
-<div class="modal fade" id="review-contents" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="review-contents" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -282,53 +288,54 @@
     <script type="text/javascript" src="js/upload.js"></script>
 
     <script type="text/javascript">
-        
-        $(document).ready(function(){
+        $(document).ready(function() {
 
             $('#new-domain').val('All');
             $('#domain').val('All');
 
             $('#new-domain').on('change', function() {
                 var domain = ($(this).find(":selected").val()).toLowerCase();
-                if(domain === "all"){
+                if (domain === "all") {
                     domain = "";
                 }
                 $("#new-papers tbody tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(domain) > -1)
                 });
-                
-              
+
+
             });
 
             $('#domain').on('change', function() {
                 var domain = ($(this).find(":selected").val()).toLowerCase();
-                if(domain === "all"){
+                if (domain === "all") {
                     domain = "";
                 }
                 $("#paper tbody tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(domain) > -1)
                 });
-                
-              
+
+
             });
 
 
         });
     </script>
 
-     <script type="text/javascript">
-            $(document).ready(function(){
-               
+    <script type="text/javascript">
+        $(document).ready(function() {
 
-                $('#btn-buy').click(function(){
-                     var x = $('#buyT').val();
-                    alert(x);
-                    $.post('/buyTokens',{data:x},function(response){
-                            window.location.reload();
-                     });
+
+            $('#btn-buy').click(function() {
+                var x = $('#buyT').val();
+                alert(x);
+                $.post('/buyTokens', {
+                    data: x
+                }, function(response) {
+                    window.location.reload();
                 });
             });
-        </script>
+        });
+    </script>
 
 </body>
 

@@ -29,14 +29,14 @@ var u_router = function(web3) {
                 console.log("Successfully connected to database.");
 
                 const db = client.db('NodeDemoWebApp');
-                const Submissions = db.collection('Submissions');
-                Submissions.updateOne({ hash: req.body.hashvalue }, { $addToSet: { reviews: { Reviewerid: req.user._id, Marks: req.body.marks, Comments: req.body.comments } } }, function(err, result) {
+                const Reviews = db.collection('Reviews');
+                Reviews.insertOne({ hash: req.body.hashvalue, Reviewerid: req.user._id, Marks: req.body.marks, Comments: req.body.comments }, function(err, result) {
                     if (err == undefined) {
                         console.log("Successfully updated");
                         SATContract.deployed().then(function(instance) {
-                            console.log(req.user.address,req.user.pwd);
-                            var x = web3.personal.unlockAccount(req.user.address,req.user.pwd);
-                            console.log("ABC",x);
+                            console.log(req.user.address, req.user.pwd);
+                            var x = web3.personal.unlockAccount(req.user.address, req.user.pwd);
+                            console.log("ABC", x);
 
                             return instance.transfer(web3.eth.accounts[0], 10, { from: req.user.address, gas: 100000 });
 
@@ -49,12 +49,34 @@ var u_router = function(web3) {
                         });
 
                         MainContract.deployed().then(function(instance) {
-                            web3.personal.unlockAccount(web3.eth.accounts[0], "Rohit@1997");
-                            return instance.Review(req.body.hashvalue, req.user.address, { from: web3.eth.accounts[0], gas: 100000 });
+                            web3.personal.unlockAccount(web3.eth.accounts[0], "123456");
+                            instance.Review(req.body.hashvalue, req.user.address.toLowerCase(), { from: web3.eth.accounts[0], gas: 100000 }).then(function(result) {
+                                instance.isReviewed.call(req.body.hashvalue).then(function(result1) {
+                                    console.log("Has been Reviewed", result1);
+                                    if (result1) {
+                                        instance.getReviewers.call(req.body.hashvalue).then(function(result2) {
+                                            console.log("Reviewers List: ", result2);
+                                            SATContract.deployed().then(function(instance) {
+                                                //console.log(req.user.address, req.user.pwd);
+                                                web3.personal.unlockAccount(web3.eth.accounts[0], "123456");
 
-                        }).then(function(result) {
-                            console.log("This is main contract")
-                            console.log(result.toString());
+                                                instance.transfer(result2[0].toLowerCase(), 10, { from: web3.eth.accounts[0], gas: 100000 });
+                                                instance.transfer(result2[1].toLowerCase(), 10, { from: web3.eth.accounts[0], gas: 100000 });
+                                                instance.transfer(result2[2].toLowerCase(), 10, { from: web3.eth.accounts[0], gas: 100000 });
+                                                instance.transfer(result2[3].toLowerCase(), 10, { from: web3.eth.accounts[0], gas: 100000 });
+                                                instance.transfer(result2[4].toLowerCase(), 10, { from: web3.eth.accounts[0], gas: 100000 });
+
+                                            }).then(function(result) {
+                                                console.log("This is SAT contract");
+                                                console.log(result.toString());
+
+                                            }).catch(function(error) {
+                                                console.log(error);
+                                            });
+                                        });
+                                    }
+                                });
+                            });
 
                         }).catch(function(error) {
                             console.log(error);
