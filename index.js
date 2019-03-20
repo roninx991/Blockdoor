@@ -91,3 +91,8 @@ app.post('/',
             res.redirect('/u');
         }
     });
+
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
