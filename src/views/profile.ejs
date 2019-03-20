@@ -212,7 +212,7 @@
                      var x = $('#buyT').val();
                     alert(x);
                     $.post('/buyTokens',{data:x},function(response){
-                            alert("Done");
+                            window.location.reload();
                      });
                 });
             });
