@@ -34,7 +34,9 @@ var u_router = function(web3) {
                     if (err == undefined) {
                         console.log("Successfully updated");
                         SATContract.deployed().then(function(instance) {
-                            web3.personal.unlockAccount(req.user.address, req.user.pwd);
+                            var x = web3.personal.unlockAccount(req.user.address, req.user.pwd);
+                            console.log("ABC",x);
+                            
                             return instance.transfer(web3.eth.accounts[0], 10, { from: req.user.address, gas: 100000 });
 
                         }).then(function(result) {

@@ -19,10 +19,12 @@ var st_router = function(web3) {
             } else {
                 SATContract.deployed().then(function(instance) {
                     console.log(web3.eth.accounts[0], req.body.sellT, req.user.address);
+                    var x = web3.personal.unlockAccount(req.user.address, req.user.pwd);
+                    console.log(x);
                     return instance.transfer(web3.eth.accounts[0], req.body.sellT, { from: req.user.address, gas: 200000 });
 
                 }).then(function(result) {
-                    console.log(result.toString());
+                    console.log("Sell Tokens Result : " ,result.toString());
                     if (req.user.type == 0) {
                         res.redirect('/p');
                     } else {
@@ -31,6 +33,11 @@ var st_router = function(web3) {
 
                 }).catch(function(error) {
                     console.log(error);
+                    if (req.user.type == 0) {
+                        res.redirect('/p');
+                    } else {
+                        res.redirect('/u');
+                    }
                 });
             }
         });

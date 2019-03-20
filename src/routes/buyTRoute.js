@@ -14,15 +14,19 @@ SATContract.setProvider(provider);
 var bt_router = function(web3) {
     buyTRouter.route("/")
         .post(function(req, res) {
+            console.log(req.body.data);
             if (!req.user) {
                 res.redirect('/');
             } else {
                 SATContract.deployed().then(function(instance) {
-                    console.log(req.body.buyT, web3.eth.accounts[0], req.user.address);
-                    return instance.transfer(req.user.address, req.body.buyT, { from: web3.eth.accounts[0], gas: 200000 });
+                    console.log(req.body.data, web3.eth.accounts[0], req.user.address);
+                    //console.log(instance);
+                    var x = web3.personal.unlockAccount(web3.eth.accounts[0], "Rohit@1997");
+                    console.log(x);
+                    return instance.transfer(req.user.address, req.body.data, { from: web3.eth.accounts[0], gas: 100000 });
 
                 }).then(function(result) {
-                    console.log(result.toString());
+                    console.log("But Tokens Result", result.toString());
                     if (req.user.type == 0) {
                         res.redirect('/p');
                     } else {
@@ -31,7 +35,11 @@ var bt_router = function(web3) {
 
                 }).catch(function(error) {
                     console.log(error);
-                    res.redirect("/u");
+                   if (req.user.type == 0) {
+                        res.redirect('/p');
+                    } else {
+                        res.redirect('/u');
+                    }
                 });
             }
         });
