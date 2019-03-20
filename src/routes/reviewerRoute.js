@@ -11,6 +11,10 @@ var provider = new Web3.providers.HttpProvider("http://localhost:8545");
 var SATContract = Contract(ContractJSON);
 SATContract.setProvider(provider);
 
+var MainContractJSON = require(path.join(__dirname, '../../build/contracts/MainContract.json'));
+var MainContract = Contract(MainContractJSON);
+MainContract.setProvider(provider);
+
 var menu = [{
         href: '/buyTokens',
         text: 'Buy SATs'
@@ -41,6 +45,47 @@ var p_router = function() {
 
                 }, function(error) {
                     console.log(error);
+                });
+
+                var count = 0;
+                var ans = new Array();
+
+                MainContract.deployed().then(function(contractInstance) {
+                    contractInstance.displayDocCount().then(function(count) {
+                        count = parseInt(count);
+                        console.log("Count: ", count);
+
+                        if (count > 0) {
+                            for (var i = 0; i < count; i++) {
+                                contractInstance.displayHash(i).then(function(h) {
+                                    var hash = h;
+                                    console.log("Hash: ", hash);
+                                    contractInstance.hasReviewed(hash, req.user.address).then(function(answer) {
+                                        console.log("Owner: ", answer);
+                                        if (!answer) {
+                                            contractInstance.displaySubmissionStatus(hash).then(function(stat) {
+                                                var s = {};
+                                                if (stat == 1)
+                                                    s.status = "Pending...";
+                                                else if (stat == 2)
+                                                    s.status = "Accepted...";
+                                                else
+                                                    s.status = "Rejected";
+                                                s.h = hash;
+                                                console.log("Object: ", s);
+                                                ans.push(s);
+                                                // console.log(ans);
+                                            });
+                                        }
+                                    });
+                                });
+                            }
+                        }
+
+
+                    }).catch(function(e) {
+                        console.log("Error: ", e);
+                    });
                 });
 
                 const url = 'mongodb://localhost:27017';

@@ -118,5 +118,10 @@ contract MainContract {
         require(submissions[docHash].cost >= 0, "Cost invalid");
         return submissions[docHash].cost;
     }
+
+    function getReviewers(string memory docHash) public view returns(address[] memory)
+    {
+        return submissions[docHash].reviewers;
+    }
     
 }
