@@ -36,72 +36,125 @@ var p_router = function(web3) {
             if (!req.user) {
                 res.redirect('/');
             } else {
-                var bal = 0;
-                SATContract.deployed().then(function(instance) {
-                    return instance.balanceOf.call(req.user.address);
+                // var bal = 0;
+                // SATContract.deployed().then(function(instance) {
+                //     return instance.balanceOf.call(req.user.address);
 
-                }).then(function(result) {
-                    console.log("Balance is: ", result.toString());
-                    bal = result.toString();
+                // }).then(function(result) {
+                //     console.log("Balance is: ", result.toString());
+                //     bal = result.toString();
 
-                }, function(error) {
-                    console.log(error);
-                });
+                // }, function(error) {
+                //     console.log(error);
+                // });
 
-                var count = 0;
-                var ans = new Array();
+                // var count = 0;
+                // var ans = new Array();
 
-                MainContract.deployed().then(function(contractInstance) {
-                    contractInstance.displayDocCount().then(function(count) {
-                        count = parseInt(count);
-                        console.log("Count: ", count);
+                // MainContract.deployed().then(function(contractInstance) {
+                //     contractInstance.displayDocCount().then(function(count) {
+                //         count = parseInt(count);
+                //         console.log("Count: ", count);
 
-                        if (count > 0) {
-                            for (var i = 0; i < count; i++) {
-                                contractInstance.displayHash(i).then(function(h) {
-                                    var hash = h;
-                                    console.log("Hash: ", hash);
-                                    contractInstance.isOwner(req.user.address, hash).then(function(answer) {
-                                        console.log("Owner: ", answer);
-                                        if (answer) {
-                                            contractInstance.displaySubmissionStatus(hash).then(function(stat) {
-                                                var s = {};
-                                                if (stat == 1)
-                                                    s.status = "Pending...";
-                                                else if (stat == 2)
-                                                    s.status = "Accepted...";
-                                                else
-                                                    s.status = "Rejected";
-                                                s.h = hash;
-                                                console.log("Object: ", s);
-                                                ans.push(s);
-                                                // console.log(ans);
-                                            });
-                                        }
-                                    });
-                                });
-                            }
-                        }
+                //         if (count > 0) {
+                //             for (var i = 0; i < count; i++) {
+                //                 contractInstance.displayHash(i).then(function(h) {
+                //                     var hash = h;
+                //                     console.log("Hash: ", hash);
+                //                     contractInstance.isOwner(req.user.address, hash).then(function(answer) {
+                //                         console.log("Owner: ", answer);
+                //                         if (answer) {
+                //                             contractInstance.displaySubmissionStatus(hash).then(function(stat) {
+                //                                 var s = {};
+                //                                 if (stat == 1)
+                //                                     s.status = "Pending...";
+                //                                 else if (stat == 2)
+                //                                     s.status = "Accepted...";
+                //                                 else
+                //                                     s.status = "Rejected";
+                //                                 s.h = hash;
+                //                                 console.log("Object: ", s);
+                //                                 ans.push(s);
+                //                                 // console.log(ans);
+                //                             });
+                //                         }
+                //                     });
+                //                 });
+                //             }
+                //         }
 
 
-                    }).catch(function(e) {
-                        console.log("Error: ", e);
-                    });
-                });
+                //     }).catch(function(e) {
+                //         console.log("Error: ", e);
+                //     });
+                // });
 
-                setTimeout(function() {
-                    console.log(ans);
 
-                    const url = 'mongodb://localhost:27017';
-                    mongodb.connect(url, { useNewUrlParser: true }, function(err, client) {
+                        const url = 'mongodb://localhost:27017';
+                        mongodb.connect(url, { useNewUrlParser: true }, function(err, client) {
                         const db = client.db('NodeDemoWebApp');
                         const Submissions = db.collection('Submissions');
 
-                        Submissions.find({ owner: req.user._id }).toArray(function(err, x) {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                res.render('profile', {
+                         Submissions.find({ owner: req.user._id }).toArray(function(err, x) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                        var bal = 0;
+                        SATContract.deployed().then(function(instance) {
+                        return instance.balanceOf.call(req.user.address);
+
+                        }).then(function(result) {
+                        console.log("Balance is: ", result.toString());
+                        bal = result.toString();
+
+                        }, function(error) {
+                        console.log(error);
+                        });
+
+                        var count = 0;
+                        var ans = new Array();
+
+                        MainContract.deployed().then(function(contractInstance) {
+                        contractInstance.displayDocCount().then(function(count) {
+                            count = parseInt(count);
+                            console.log("Count: ", count);
+
+                            if (count > 0) {
+                                for (var i = 0; i < count; i++) {
+                                    contractInstance.displayHash(i).then(function(h) {
+                                        var hash = h;
+                                        console.log("Hash: ", hash);
+                                        contractInstance.isOwner(req.user.address, hash).then(function(answer) {
+                                            console.log("Owner: ", answer);
+                                            if (answer) {
+                                                contractInstance.displaySubmissionStatus(hash).then(function(stat) {
+                                                    var s = {};
+                                                    if (stat == 1)
+                                                        s.status = "Pending...";
+                                                    else if (stat == 2)
+                                                        s.status = "Accepted...";
+                                                    else
+                                                        s.status = "Rejected";
+                                                    s.h = hash;
+                                                    console.log("Object: ", s);
+                                                    ans.push(s);
+                                                    // console.log(ans);
+                                                });
+                                            }
+                                        });
+                                    });
+                                }
+                            }
+
+
+                        }).catch(function(e) {
+                            console.log("Error: ", e);
+                        });
+                        });
+
+
+                            setTimeout(function(){
+                                 res.render('profile', {
                                     title: "SmartReviewer",
                                     navMenu: menu,
                                     user: req.user,
@@ -109,10 +162,13 @@ var p_router = function(web3) {
                                     details: x,
                                     sub: ans
                                 });
+
+                            },5000);
+                               
                             }
                         });
                     });
-                }, 5000);
+               
             }
         });
 

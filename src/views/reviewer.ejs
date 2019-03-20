@@ -229,10 +229,10 @@
                     <h5 class="modal-title" id="exampleModalLabel">Buy SATs</h5>
                 </div>
                 <div class="modal-body">
-                    <form class="form" action="/buyTokens" method="POST">
+                    <form class="form" action="/" >
                         <label>Buy Tokens: </label>
                         <input id="buyT" name="buyT" type="number" max=100 min=1>
-                        <input class="btn btn-info btn-lg" id="btn-upload" type="submit" value="Confirm" />
+                        <input class="btn btn-info btn-lg" id="btn-buy" type="button" value="Confirm" />
                     </form>
                 </div>
             </div>
@@ -315,6 +315,20 @@
 
         });
     </script>
+
+     <script type="text/javascript">
+            $(document).ready(function(){
+               
+
+                $('#btn-buy').click(function(){
+                     var x = $('#buyT').val();
+                    alert(x);
+                    $.post('/buyTokens',{data:x},function(response){
+                            window.location.reload();
+                     });
+                });
+            });
+        </script>
 
 </body>
 

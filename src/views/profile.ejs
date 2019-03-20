@@ -96,14 +96,14 @@
                         <tr>
                             <td class="text-left">
                                 <a target="_blank" href="http://localhost:8080/ipfs/<%=sub[i]%>">
-                                    <%=sub[i]%>
+                                    <%=sub[i].h%>
                                 </a>
                             </td>
                             <td class="text-left" id="accuracy">
                                 <%=details[i].timestamp%>
                             </td>
                             <td class="text-left" id="accuracy">
-                                <%=details[i].status%>
+                                <%=sub[i].status%>
                             </td>
                         </tr>
                         <%}%>
@@ -163,10 +163,10 @@
                         <h5 class="modal-title" id="exampleModalLabel">Buy SATs</h5>
                     </div>
                     <div class="modal-body">
-                        <form class="form" action="/buyTokens" method="POST">
+                        <form class="form" action="">
                             <label>Buy Tokens: </label>
                             <input id="buyT" name="buyT" type="number" max=100 min=1>
-                            <input class="btn btn-info btn-lg" id="btn-upload" type="submit" value="Confirm" />
+                            <input class="btn btn-info btn-lg" id="btn-buy" type="button" value="Confirm" />
                         </form>
                     </div>
                 </div>
@@ -183,7 +183,7 @@
                         <form class="form" action="/sellTokens" method="POST">
                             <label>Sell Tokens: </label>
                             <input id="sellT" name="sellT" type="number" max=<%=balance%> min=1>
-                            <input class="btn btn-info btn-lg" id="btn-upload" type="submit" value="Confirm" />
+                            <input class="btn btn-info btn-lg" id="btn-sell" type="submit" value="Confirm" />
                         </form>
                     </div>
                 </div>
@@ -201,6 +201,20 @@
         <script type="text/javascript">
             $("form").on("change", ".file-upload-field", function() {
                 $(this).parent(".file-upload-wrapper").attr("data-text", $(this).val().replace(/.*(\/|\\)/, ''));
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+               
+
+                $('#btn-buy').click(function(){
+                     var x = $('#buyT').val();
+                    alert(x);
+                    $.post('/buyTokens',{data:x},function(response){
+                            window.location.reload();
+                     });
+                });
             });
         </script>
 </body>

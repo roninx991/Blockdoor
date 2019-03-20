@@ -74,7 +74,7 @@ var u_router = function(web3) {
                                     });
 
                                     MainContract.deployed().then(function(instance) {
-                                        web3.personal.unlockAccount(web3.eth.accounts[0], "Pink#4119");
+                                        web3.personal.unlockAccount(web3.eth.accounts[0], "Rohit@1997");
                                         console.log(file[0].hash);
                                         return instance.newSubmission(req.user.address, file[0].hash, { from: web3.eth.accounts[0] });
 

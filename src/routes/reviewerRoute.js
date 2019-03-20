@@ -35,17 +35,7 @@ var p_router = function() {
             if (!req.user) {
                 res.redirect('/');
             } else {
-                var bal = 0;
-                SATContract.deployed().then(function(instance) {
-                    return instance.balanceOf.call(req.user.address);
-
-                }).then(function(result) {
-                    console.log(result.toString());
-                    bal = result.toString();
-
-                }, function(error) {
-                    console.log(error);
-                });
+               
 
                 var count = 0;
                 var ans = new Array();
@@ -94,30 +84,58 @@ var p_router = function() {
                     const Submissions = db.collection('Submissions');
                     var review, review_content;
 
-                    Submissions.find({ "reviews.Reviewerid": req.user._id }).toArray(function(err, reviews) {
-                        review = reviews;
-                        //console.log(review[0]);
-                    });
+                    
 
                     Submissions.find({ "reviews.Reviewerid": req.user._id }, { 'reviews.$': true }).toArray(function(err, ans1) {
                         review_content = ans1;
-                        console.log("Review Content 1", review_content);
-                        Submissions.find({ "reviews.Reviewerid": { $ne: req.user._id } }).toArray(function(err, ans) {
-                            if (err) {
-                                console.log(err);
-                            } else {
-                                res.render('reviewer', {
-                                    title: "SmartReviewer",
-                                    navMenu: menu,
-                                    user: req.user,
-                                    sub: ans,
-                                    balance: bal,
-                                    reviewed: review,
-                                    content: review_content
-                                });
-                                console.log(review_content);
-                            }
+                         var bal = 0;
+                        Submissions.find({ "reviews.Reviewerid": req.user._id }).toArray(function(err, reviews) {
+                            review = reviews;
+                            //console.log(review[0]);
+                            SATContract.deployed().then(function(instance) {
+                                 return instance.balanceOf.call(req.user.address);
+                            }).then(function(result) {
+                                console.log(result.toString());
+                                bal = result.toString();
+                                Submissions.find({ "reviews.Reviewerid": { $ne: req.user._id } }).toArray(function(err, ans) {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        res.render('reviewer', {
+                                            title: "SmartReviewer",
+                                            navMenu: menu,
+                                            user: req.user,
+                                            sub: ans,
+                                            balance: bal,
+                                            reviewed: review,
+                                            content: review_content
+                                        });
+                                        //console.log(review_content);
+                                    }
+                                });                                
+                            }, function(error) {
+                                console.log(error);
+                            });
                         });
+                       
+
+                        //console.log("Review Content 1", review_content);
+                        // Submissions.find({ "reviews.Reviewerid": { $ne: req.user._id } }).toArray(function(err, ans) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //     } else {
+                        //         res.render('reviewer', {
+                        //             title: "SmartReviewer",
+                        //             navMenu: menu,
+                        //             user: req.user,
+                        //             sub: ans,
+                        //             balance: bal,
+                        //             reviewed: review,
+                        //             content: review_content
+                        //         });
+                        //         console.log(review_content);
+                        //     }
+                        // });
                     });
                     //console.log("Review Content 2", review_content);
 
