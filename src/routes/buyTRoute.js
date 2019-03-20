@@ -21,7 +21,7 @@ var bt_router = function(web3) {
                 SATContract.deployed().then(function(instance) {
                     console.log(req.body.data, web3.eth.accounts[0], req.user.address);
                     //console.log(instance);
-                    var x = web3.personal.unlockAccount(web3.eth.accounts[0], "123456");
+                    var x = web3.personal.unlockAccount(web3.eth.accounts[0], "Rohit@1997");
                     console.log(x);
                     return instance.transfer(req.user.address, req.body.data, { from: web3.eth.accounts[0], gas: 100000 });
 
