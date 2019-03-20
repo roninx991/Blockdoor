@@ -41,7 +41,7 @@ var p_router = function(web3) {
                     return instance.balanceOf.call(req.user.address);
 
                 }).then(function(result) {
-                    console.log(result.toString());
+                    console.log("Balance is: ", result.toString());
                     bal = result.toString();
 
                 }, function(error) {
@@ -50,57 +50,69 @@ var p_router = function(web3) {
 
                 var count = 0;
                 var ans = new Array();
-                MainContract.deployed().then(function(instance) {
-                    web3.personal.unlockAccount(web3.eth.accounts[0], "Rohit@1997");
-                   // console.log(instance);
-                    return instance.displayDocCount();
 
-                }).then(function(result) {
-                    console.log("This is main contract")
-                    console.log(result.toString());
-                    count = result;
+                MainContract.deployed().then(function(contractInstance) {
+                    contractInstance.displayDocCount().then(function(count) {
+                        count = parseInt(count);
+                        console.log("Count: ", count);
 
-                }).catch(function(error) {
-                    console.log(error);
-                });
-
-                MainContract.deployed().then(function(instance) {
-                    web3.personal.unlockAccount(web3.eth.accounts[0], "Rohit@1997");
-                    for(var i=0;i<count;i++){
-                        var hash = instance.displayHash();
-                        var x = instance.isOwner(req.user.address, hash);
-                        if(x==true){
-                            ans.push(hash);    
+                        if (count > 0) {
+                            for (var i = 0; i < count; i++) {
+                                contractInstance.displayHash(i).then(function(h) {
+                                    var hash = h;
+                                    console.log("Hash: ", hash);
+                                    contractInstance.isOwner(req.user.address, hash).then(function(answer) {
+                                        console.log("Owner: ", answer);
+                                        if (answer) {
+                                            contractInstance.displaySubmissionStatus(hash).then(function(stat) {
+                                                var s = {};
+                                                if (stat == 1)
+                                                    s.status = "Pending...";
+                                                else if (stat == 2)
+                                                    s.status = "Accepted...";
+                                                else
+                                                    s.status = "Rejected";
+                                                s.h = hash;
+                                                console.log("Object: ", s);
+                                                ans.push(s);
+                                                // console.log(ans);
+                                            });
+                                        }
+                                    });
+                                });
+                            }
                         }
 
-                    }
-                    console.log(ans);
 
-                }).catch(function(error) {
-                    console.log(error);
-                });
-
-
-                const url = 'mongodb://localhost:27017';
-                mongodb.connect(url, { useNewUrlParser: true }, function(err, client) {
-                    const db = client.db('NodeDemoWebApp');
-                    const Submissions = db.collection('Submissions');
-
-                    Submissions.find({ owner: req.user._id }).toArray(function(err, x) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            res.render('profile', {
-                                title: "SmartReviewer",
-                                navMenu: menu,
-                                user: req.user,
-                                balance: bal,
-                                details:x,
-                                sub:ans
-                            });
-                        }
+                    }).catch(function(e) {
+                        console.log("Error: ", e);
                     });
                 });
+
+                setTimeout(function() {
+                    console.log(ans);
+
+                    const url = 'mongodb://localhost:27017';
+                    mongodb.connect(url, { useNewUrlParser: true }, function(err, client) {
+                        const db = client.db('NodeDemoWebApp');
+                        const Submissions = db.collection('Submissions');
+
+                        Submissions.find({ owner: req.user._id }).toArray(function(err, x) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                res.render('profile', {
+                                    title: "SmartReviewer",
+                                    navMenu: menu,
+                                    user: req.user,
+                                    balance: bal,
+                                    details: x,
+                                    sub: ans
+                                });
+                            }
+                        });
+                    });
+                }, 5000);
             }
         });
 

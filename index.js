@@ -6,7 +6,6 @@ var passport = require('passport');
 var session = require('express-session');
 
 var Web3 = require('web3');
-var contract = require('truffle-contract');
 
 const fileUpload = require('express-fileupload');
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));

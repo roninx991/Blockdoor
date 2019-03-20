@@ -19,7 +19,7 @@ var st_router = function(web3) {
             } else {
                 SATContract.deployed().then(function(instance) {
                     console.log(web3.eth.accounts[0], req.body.sellT, req.user.address);
-                    return instance.transfer(web3.eth.accounts[0], req.body.sellT, { from: req.user.address, gas: 100000 });
+                    return instance.transfer(web3.eth.accounts[0], req.body.sellT, { from: req.user.address, gas: 200000 });
 
                 }).then(function(result) {
                     console.log(result.toString());
@@ -31,11 +31,6 @@ var st_router = function(web3) {
 
                 }).catch(function(error) {
                     console.log(error);
-                    if (req.user.type == 0) {
-                        res.redirect('/p');
-                    } else {
-                        res.redirect('/u');
-                    }
                 });
             }
         });

@@ -15,23 +15,22 @@ contract MainContract {
     mapping(string => Submission) private submissions;
     string[] public hashes;
 
-    event AddNewFile(string docHash, address userAddress, uint status);
-    
-    // Function to insert a document in mapping
-    function newSubmission(address userAddress, string memory docHash) public 
-    {
-        require(!isPresent(docHash), "Document already present");
-        emit AddNewFile(docHash, userAddress, 1);
-        hashes.push(docHash);
-        submissions[docHash].index = userAddress;
-        submissions[docHash].status = 1;
-    }
 
     // Function to check if a document is already present
     function isPresent(string memory docHash) public view returns(bool)
     {
         return (submissions[docHash].status == 0);
     }
+
+    // Function to insert a document in mapping
+    function newSubmission(address userAddress, string memory docHash) public 
+    {
+        // require(!isPresent(docHash), "Document already present");
+        hashes.push(docHash);
+        submissions[docHash].index = userAddress;
+        submissions[docHash].status = 1;
+    }
+
 
     // Function to check if given address is owner of document
     function isOwner(address userAddress, string memory h) public view returns(bool)
