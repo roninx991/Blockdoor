@@ -35,7 +35,7 @@ var p_router = function() {
             if (!req.user) {
                 res.redirect('/');
             } else {
-               
+
 
                 var count = 0;
                 var ans = new Array();
@@ -84,16 +84,16 @@ var p_router = function() {
                     const Submissions = db.collection('Submissions');
                     var review, review_content;
 
-                    
+
 
                     Submissions.find({ "reviews.Reviewerid": req.user._id }, { 'reviews.$': true }).toArray(function(err, ans1) {
                         review_content = ans1;
-                         var bal = 0;
+                        var bal = 0;
                         Submissions.find({ "reviews.Reviewerid": req.user._id }).toArray(function(err, reviews) {
                             review = reviews;
                             //console.log(review[0]);
                             SATContract.deployed().then(function(instance) {
-                                 return instance.balanceOf.call(req.user.address);
+                                return instance.balanceOf.call(req.user.address);
                             }).then(function(result) {
                                 console.log(result.toString());
                                 bal = result.toString();
@@ -112,12 +112,12 @@ var p_router = function() {
                                         });
                                         //console.log(review_content);
                                     }
-                                });                                
+                                });
                             }, function(error) {
                                 console.log(error);
                             });
                         });
-                       
+
 
                         //console.log("Review Content 1", review_content);
                         // Submissions.find({ "reviews.Reviewerid": { $ne: req.user._id } }).toArray(function(err, ans) {
