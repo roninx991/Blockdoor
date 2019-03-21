@@ -7,6 +7,7 @@ contract MainContract {
         address index;
         uint status;
         address[] reviewers;
+        uint[] marks;
         uint rating;
         uint cost;
     }
@@ -61,11 +62,13 @@ contract MainContract {
     }
         
     // Function to upvote a document by reviewer
-    function Review(string memory docHash, address reviewer) public
+    function Review(string memory docHash, address reviewer, uint m) public
     {
         require(!isReviewed(docHash), "Reviewing have been closed");
         require(!hasReviewed(docHash, reviewer), "You have already reviewed this submission");
         submissions[docHash].reviewers.push(reviewer);
+        submissions[docHash].marks.push(m);
+
     }
     
     // Function to check if a reviewer has already voted for a document
@@ -122,6 +125,11 @@ contract MainContract {
     function getReviewers(string memory docHash) public view returns(address[] memory)
     {
         return submissions[docHash].reviewers;
+    }
+
+    function getMarks(string memory docHash) public view returns(uint[] memory)
+    {
+        return submissions[docHash].marks;
     }
     
 }
