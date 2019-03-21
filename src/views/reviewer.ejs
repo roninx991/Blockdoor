@@ -36,7 +36,7 @@
 
             </ul>
             <form class="form-inline my-2 my-lg-0" action="/logout" method="GET">
-                <button class="btn btn-success my-2 my-sm-0" type="submit" id="btn-signin">Logout</button>
+                <a class="btn btn-success my-2 my-sm-0" type="submit" id="btn-signin">Logout</a>
             </form>
 
         </div>
@@ -94,7 +94,7 @@
                 var balance = parseInt($('#balance').html());
                 if (balance < 10) {
                     $('button').prop('disabled', true);
-                    swal("Low Blance!", "Please buy tokens to continue reviewing", "error");
+                    swal("Low Balance!", "Please buy tokens to continue reviewing", "error");
                 }
 
             });
@@ -115,7 +115,9 @@
             </ul>
             <div class="tab-content" id="pills-tabContent">
 
-
+                <% if(sub1.length == 0){%>
+                        <center><h6>No Papers yet</h6></center>
+                <%}else{%>
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
                     <select id="new-domain" value="All">
@@ -156,6 +158,11 @@
                     </table>
 
                 </div>
+                 <%}%>
+
+                 <% if(sub2.length == 0){%>
+                        <center><h6>No Papers yet</h6></center>
+                <%}else{%>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <select id="domain" value="All">
                                 <option val="all" selected="">All</option>
@@ -192,7 +199,7 @@
                                     <td class="text-left">
                                         <%=sub2[i].domain%>
                                     </td>
-                                    <td><a class="btn btn-sm btn-success" data-toggle="modal" data-target="#review-contents" id="yes" onclick="$('#marks').html('<%=sub2[i].reviews[0].Marks%>');$('#comments').html('<%=sub2[i].reviews[0].Comments%>');">Info</a></td>
+                                    <td><a class="btn btn-sm btn-success" data-toggle="modal" data-target="#review-contents" id="yes" onclick="$('#marks').html('<%=sub2[i].reviews%>');$('#comments').html('<%=sub2[i].reviews%>');">Info</a></td>
                                 </tr>
                                 <%}%>
 
@@ -201,6 +208,7 @@
                     </table>
 
                 </div>
+                 <%}%>
 
             </div>
         </div>

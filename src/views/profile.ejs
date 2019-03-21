@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/upload.css">
     <!--  <script src="https://unpkg.com/ipfs-api/dist/index.min.js"></script>
     <script src="https://npmcdn.com/ipfs-api/dist/index.js"></script> -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -39,7 +40,7 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" action="/logout" method="GET">
-                <button class="btn btn-success my-2 my-sm-0" type="submit" id="btn-signin">Logout</button>
+                <a class="btn btn-success my-2 my-sm-0" type="submit" id="btn-signin">Logout</a>
             </form>
 
         </div>
@@ -64,7 +65,7 @@
                     </li>
                     <!-- <li class="list-group-item">Public Key : <%=user.address%></li>  -->
                     <li class="list-group-item">Account Balance :
-                        <%=balance%> SAT
+                       <span id="balance"> <%=balance%></span> SAT
                     </li>
                 </ul>
 
@@ -86,7 +87,9 @@
                 <h3>My Submissions</h3>
             </center>
             <br>
-
+            <% if(sub.length == 0){%>
+                <center><h6>You do not have any submissions</h6></center>
+            <%}else{%>
             <table class="table-fill">
                 <thead>
                     <tr>
@@ -114,11 +117,22 @@
 
                 </tbody>
             </table>
+            <%}%>
 
         </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var balance = parseInt($('#balance').html());
+                if (balance < 100) {
+                    $('button').prop('disabled', true);
+                    swal("Low Balance!", "Please buy tokens", "error");
+                }
+
+            });
+        </script>
 
 
-        <div id="upload-doc" data-toggle="modal" data-target="#exampleModal">
+        <div id="upload-doc">
             <span>Upload</span>
             <button type="button" id="upload-button" data-toggle="modal" data-target="#exampleModal">
 			<h2>+</h2>
