@@ -83,7 +83,7 @@ app.post('/',
     passport.authenticate('local', { failureRedirect: '/' }),
     function(req, res) {
         console.log("Success");
-        web3.personal.unlockAccount(web3.eth.accounts[0], "123456");
+        web3.personal.unlockAccount(web3.eth.accounts[0], "Rohit@1997");
         web3.eth.sendTransaction({ from: web3.eth.accounts[0], to: req.user.address, value: web3.toWei(100, "ether") });
         if (req.user.type == 0) {
             res.redirect('/p');

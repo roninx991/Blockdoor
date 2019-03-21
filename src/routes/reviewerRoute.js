@@ -84,13 +84,19 @@ var p_router = function() {
 
                                                                 Submissions.find({ "hash": hash }).toArray(function(err, pending) {
                                                                     console.log(pending);
-                                                                    s.timestamp = pending[0].timestamp;
-                                                                    s.domain = pending[0].domain;
+                                                                    if(err == undefined){
+                                                                        s.timestamp = pending[0].timestamp; 
+                                                                        s.domain = pending[0].domain;    
+                                                                    }
+                                                                    
                                                                 });
 
                                                                 Reviews.find({ "hash": hash }).toArray(function(err, acceptreject) {
                                                                     console.log(acceptreject);
-                                                                    s.reviews = acceptreject;
+                                                                    if(err == undefined){
+                                                                        s.reviews = acceptreject;    
+                                                                    }
+                                                                    
                                                                 });
                                                                 ans.push(s);
                                                             }
@@ -103,13 +109,17 @@ var p_router = function() {
 
                                                             Submissions.find({ "hash": hash }).toArray(function(err, pending) {
                                                                 console.log(pending);
-                                                                s.timestamp = pending[0].timestamp;
-                                                                s.domain = pending[0].domain;
+                                                                if(err == undefined){
+                                                                        s.timestamp = pending[0].timestamp; 
+                                                                        s.domain = pending[0].domain;    
+                                                                    }
                                                             });
 
                                                             Reviews.find({ "hash": hash }).toArray(function(err, acceptreject) {
                                                                 console.log(acceptreject);
-                                                                s.reviews = acceptreject;
+                                                                 if(err == undefined){
+                                                                        s.reviews = acceptreject;    
+                                                                    }
                                                             });
 
                                                             ans1.push(s);
@@ -135,14 +145,18 @@ var p_router = function() {
 
                                                             Submissions.find({ "hash": hash }).toArray(function(err, pending) {
                                                                 console.log(pending);
-                                                                s.timestamp = pending[0].timestamp;
-                                                                s.domain = pending[0].domain;
+                                                               if(err == undefined){
+                                                                        s.timestamp = pending[0].timestamp; 
+                                                                        s.domain = pending[0].domain;    
+                                                                    }
                                                             });
 
                                                             Reviews.find({ "hash": hash }).toArray(function(err, acceptreject) {
                                                                 console.log(acceptreject);
-                                                                s.reviews = acceptreject;
-                                                            });
+                                                                if(err == undefined){
+                                                                        s.reviews = acceptreject;    
+                                                                    }
+                                                          });
 
                                                             ans1.push(s);
                                                         });
