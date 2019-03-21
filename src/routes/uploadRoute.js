@@ -42,24 +42,19 @@ var u_router = function(web3) {
                 let testFile = fs.readFileSync(pathname);
                 let testBuffer = new Buffer.from(testFile);
 
-                // console.log(web3);
-
                 ipfs.files.add(testBuffer, function(err, file) {
                     if (err) {
-                        console.log(err);
+                        console.log("IPFS error ", err);
                     } else {
-                        // console.log(req);
                         const url = 'mongodb://localhost:27017';
                         mongodb.connect(url, { useNewUrlParser: true }, function(err, client) {
                             console.log("Successfully connected to database.");
 
                             const db = client.db('NodeDemoWebApp');
-                            // const Users = db.collection('Users');
                             const Submissions = db.collection('Submissions');
 
                             Submissions.insertOne({ owner: req.user._id, hash: file[0].hash, timestamp: new Date(Date.now()).toISOString(), status: 'Pending', domain: req.body.domain }, function(err, result) {
                                 if (err == undefined) {
-                                    console.log(result);
                                     console.log("Successfully uploaded File");
 
                                     SATContract.deployed().then(function(instance) {
@@ -67,24 +62,21 @@ var u_router = function(web3) {
                                         return instance.transfer(web3.eth.accounts[0], 100, { from: req.user.address, gas: 100000 });
 
                                     }).then(function(result) {
-                                        console.log("This is SAT contract");
-                                        console.log(result.toString());
+                                        console.log("Successfully deducted submission cost");
 
-                                    }).catch(function(error) {
-                                        console.log(error);
+                                    }).catch(function(err) {
+                                        console.log("Error in cost deduction for submission", err);
                                     });
 
                                     MainContract.deployed().then(function(instance) {
-                                        web3.personal.unlockAccount(web3.eth.accounts[0], "Rohit@1997");
-                                        console.log(file[0].hash);
+                                        web3.personal.unlockAccount(web3.eth.accounts[0], "123456");
                                         return instance.newSubmission(req.user.address, file[0].hash, { from: web3.eth.accounts[0] });
 
                                     }).then(function(result) {
-                                        console.log("This is main contract New Submission")
-                                        console.log(result.toString());
+                                        console.log("Successful new submission")
 
-                                    }).catch(function(error) {
-                                        console.log(error);
+                                    }).catch(function(err) {
+                                        console.log("Submission Error", err);
                                     });
 
                                 } else console.log(err);

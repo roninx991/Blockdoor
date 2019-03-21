@@ -20,19 +20,17 @@ var st_router = function(web3) {
                 SATContract.deployed().then(function(instance) {
                     console.log(web3.eth.accounts[0], req.body.sellT, req.user.address);
                     var x = web3.personal.unlockAccount(req.user.address, req.user.pwd);
-                    console.log(x);
                     return instance.transfer(web3.eth.accounts[0], req.body.sellT, { from: req.user.address, gas: 200000 });
 
                 }).then(function(result) {
-                    console.log("Sell Tokens Result : " ,result.toString());
                     if (req.user.type == 0) {
                         res.redirect('/p');
                     } else {
                         res.redirect('/u');
                     }
 
-                }).catch(function(error) {
-                    console.log(error);
+                }).catch(function(err) {
+                    console.log("Error in selling tokens: ", err);
                     if (req.user.type == 0) {
                         res.redirect('/p');
                     } else {

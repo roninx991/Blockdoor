@@ -32,7 +32,7 @@ var menu = [{
 var p_router = function() {
     reviewerRouter.route("/")
         .all(function(req, res, next) {
-            if (!req.user) {
+            if (!req.user && req.user.type != "0") {
                 res.redirect('/');
             } else {
 
@@ -64,17 +64,15 @@ var p_router = function() {
                     MainContract.deployed().then(function(contractInstance) {
                         contractInstance.displayDocCount().then(function(count) {
                             count = parseInt(count);
-                            console.log("Count: ", count);
 
                             if (count > 0) {
                                 for (var i = 0; i < count; i++) {
                                     contractInstance.displayHash(i).then(function(h) {
                                         var hash = h;
-                                        console.log("Hash: ", hash);
                                         contractInstance.isReviewed(hash).then(function(truth) {
                                             if (!truth) {
                                                 contractInstance.hasReviewed(hash, req.user.address).then(function(answer) {
-                                                    console.log("Hasn't Reviewed Owner: ", answer);
+                                                    console.log("Owner has reviewed: ", answer);
                                                     if (!answer) {
                                                         contractInstance.displaySubmissionStatus(hash).then(function(stat) {
                                                             var s = {};
@@ -83,20 +81,18 @@ var p_router = function() {
                                                                 s.h = hash;
 
                                                                 Submissions.find({ "hash": hash }).toArray(function(err, pending) {
-                                                                    console.log(pending);
-                                                                    if(err == undefined){
-                                                                        s.timestamp = pending[0].timestamp; 
-                                                                        s.domain = pending[0].domain;    
+                                                                    if (err == undefined) {
+                                                                        s.timestamp = pending[0].timestamp;
+                                                                        s.domain = pending[0].domain;
                                                                     }
-                                                                    
+
                                                                 });
 
                                                                 Reviews.find({ "hash": hash }).toArray(function(err, acceptreject) {
-                                                                    console.log(acceptreject);
-                                                                    if(err == undefined){
-                                                                        s.reviews = acceptreject;    
+                                                                    if (err == undefined) {
+                                                                        s.reviews = acceptreject;
                                                                     }
-                                                                    
+
                                                                 });
                                                                 ans.push(s);
                                                             }
@@ -108,18 +104,16 @@ var p_router = function() {
                                                             s.h = hash;
 
                                                             Submissions.find({ "hash": hash }).toArray(function(err, pending) {
-                                                                console.log(pending);
-                                                                if(err == undefined){
-                                                                        s.timestamp = pending[0].timestamp; 
-                                                                        s.domain = pending[0].domain;    
-                                                                    }
+                                                                if (err == undefined) {
+                                                                    s.timestamp = pending[0].timestamp;
+                                                                    s.domain = pending[0].domain;
+                                                                }
                                                             });
 
                                                             Reviews.find({ "hash": hash }).toArray(function(err, acceptreject) {
-                                                                console.log(acceptreject);
-                                                                 if(err == undefined){
-                                                                        s.reviews = acceptreject;    
-                                                                    }
+                                                                if (err == undefined) {
+                                                                    s.reviews = acceptreject;
+                                                                }
                                                             });
 
                                                             ans1.push(s);
@@ -129,34 +123,30 @@ var p_router = function() {
                                                 });
                                             } else {
                                                 contractInstance.hasReviewed(hash, req.user.address).then(function(answer) {
-                                                    console.log("Has Reviewed Owner: ", answer);
+                                                    console.log("Owner has reviewed: ", answer);
                                                     if (answer) {
                                                         contractInstance.displaySubmissionStatus(hash).then(function(stat) {
                                                             var s = {};
                                                             if (stat == 2) {
                                                                 s.status = "Accepted";
                                                                 s.h = hash;
-                                                                //ans1.push(s);
                                                             } else {
                                                                 s.status = "Rejected";
                                                                 s.h = hash;
-                                                                // ans1.push(s);
                                                             }
 
                                                             Submissions.find({ "hash": hash }).toArray(function(err, pending) {
-                                                                console.log(pending);
-                                                               if(err == undefined){
-                                                                        s.timestamp = pending[0].timestamp; 
-                                                                        s.domain = pending[0].domain;    
-                                                                    }
+                                                                if (err == undefined) {
+                                                                    s.timestamp = pending[0].timestamp;
+                                                                    s.domain = pending[0].domain;
+                                                                }
                                                             });
 
                                                             Reviews.find({ "hash": hash }).toArray(function(err, acceptreject) {
-                                                                console.log(acceptreject);
-                                                                if(err == undefined){
-                                                                        s.reviews = acceptreject;    
-                                                                    }
-                                                          });
+                                                                if (err == undefined) {
+                                                                    s.reviews = acceptreject;
+                                                                }
+                                                            });
 
                                                             ans1.push(s);
                                                         });

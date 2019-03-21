@@ -55,6 +55,10 @@ contract MainContract {
         return submissions[docHash].status;
     }
 
+    function setStatus(string memory docHash, uint s) public {
+        submissions[docHash].status = s;
+    }
+
     // Function to return count of uploaded documents
     function displayDocCount() public view returns(uint)
     {
@@ -62,14 +66,20 @@ contract MainContract {
     }
         
     // Function to upvote a document by reviewer
-    function Review(string memory docHash, address reviewer, uint m) public
+    function Review(string memory docHash, address reviewer) public
     {
         require(!isReviewed(docHash), "Reviewing have been closed");
         require(!hasReviewed(docHash, reviewer), "You have already reviewed this submission");
         submissions[docHash].reviewers.push(reviewer);
-        submissions[docHash].marks.push(m);
+        // submissions[docHash].marks.push(m);
 
     }
+
+    function giveMarks(string memory docHash, uint m) public
+    {
+        submissions[docHash].marks.push(m);
+    }
+
     
     // Function to check if a reviewer has already voted for a document
     function hasReviewed(string memory docHash, address addr) public view returns(bool)

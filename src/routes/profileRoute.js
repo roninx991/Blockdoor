@@ -33,7 +33,7 @@ var menu = [{
 var p_router = function(web3) {
     profileRouter.route("/")
         .all(function(req, res, next) {
-            if (!req.user) {
+            if (!req.user && req.user.type != "0") {
                 res.redirect('/');
             } else {
 
@@ -44,7 +44,7 @@ var p_router = function(web3) {
 
                     Submissions.find({ owner: req.user._id }).toArray(function(err, x) {
                         if (err) {
-                            console.log(err);
+                            console.log("Error in finding user", err);
                         } else {
                             var bal = 0;
                             SATContract.deployed().then(function(instance) {
@@ -54,8 +54,8 @@ var p_router = function(web3) {
                                 console.log("Balance is: ", result.toString());
                                 bal = result.toString();
 
-                            }, function(error) {
-                                console.log(error);
+                            }, function(err) {
+                                console.log("Error in retreiving balance", err);
                             });
 
                             var count = 0;
@@ -64,15 +64,15 @@ var p_router = function(web3) {
                             MainContract.deployed().then(function(contractInstance) {
                                 contractInstance.displayDocCount().then(function(count) {
                                     count = parseInt(count);
-                                    console.log("Count: ", count);
+                                    console.log("Submission Count: ", count);
 
                                     if (count > 0) {
                                         for (var i = 0; i < count; i++) {
                                             contractInstance.displayHash(i).then(function(h) {
                                                 var hash = h;
-                                                console.log("Hash: ", hash);
+                                                console.log("Submission Hash: ", hash);
                                                 contractInstance.isOwner(req.user.address, hash).then(function(answer) {
-                                                    console.log("Owner: ", answer);
+                                                    console.log("Submission Owner: ", answer);
                                                     if (answer) {
                                                         contractInstance.displaySubmissionStatus(hash).then(function(stat) {
                                                             var s = {};
@@ -83,9 +83,7 @@ var p_router = function(web3) {
                                                             else
                                                                 s.status = "Rejected";
                                                             s.h = hash;
-                                                            console.log("Object: ", s);
                                                             ans.push(s);
-                                                            // console.log(ans);
                                                         });
                                                     }
                                                 });
