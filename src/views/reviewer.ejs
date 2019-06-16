@@ -104,118 +104,38 @@
 
             <br><br>
 
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">New Papers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Reviewed Papers</a>
-                </li>
+            <% if(sub1.length == 0){%>
+                <center>
+                    <h6>No Papers yet</h6>
+                </center>
+                <%}else{%>
+                    <table class="table-fill" id="new-papers">
+                        <thead>
+                            <tr>
+                                <th class="text-left" style="width:75%;">Hash Value</th>
+                                <th class="text-left" style="width:20%;">Domain</th>
 
-            </ul>
-            <div class="tab-content" id="pills-tabContent">
+                                <th class="text-left">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-hover">
+                            <%for(var i=0;i<sub1.length;i++){%>
+                                <tr>
+                                    <td class="text-left" id="hash">
 
+                                        <%=sub1[i].uname%>
 
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <% if(sub1.length == 0){%>
-                        <center>
-                            <h6>No Papers yet</h6>
-                        </center>
-                        <%}else{%>
-                            <select id="new-domain" value="All">
-                                <option val="all" selected="">All</option>
-                                <option val="Machine Learning">Machine Learning</option>
-                                <option val="Blockchain">BlockChain</option>
-                                <option val="Cloud Computing">Cloud Computing</option>
-                                <option val="Artificial Intelligence">Artificial Intelligence</option>
-                                <option val="Cyber Security">Cyber Security</option>
-                                <option val="Computer Networks">Computer Networks</option>
-                                <option val="Digital Signal Processing">Digital Signal Processing</option>
-                    </select>
-                            <table class="table-fill" id="new-papers">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left" style="width:75%;">Hash Value</th>
-                                        <th class="text-left" style="width:20%;">Domain</th>
+                                    </td>
+                                    <td class="text-left">
+                                        <%=sub1[i].address%>
+                                    </td>
+                                    <td class="text-left" id="accuracy"><button class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal" id="yes" onclick="$('#inputhash').val('<%=sub1[i].address%>');">Review</button></td>
+                                </tr>
+                                <%}%>
 
-                                        <th class="text-left">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-hover">
-                                    <%for(var i=0;i<sub1.length;i++){%>
-                                        <tr>
-                                            <td class="text-left" id="hash">
-                                                <a target="_blank" href="http://localhost:8080/ipfs/<%=sub1[i].h%>">
-                                                    <%=sub1[i].h%>
-                                                </a>
-                                            </td>
-                                            <td class="text-left">
-                                                <%=sub1[i].domain%>
-                                            </td>
-                                            <td class="text-left" id="accuracy"><button class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal" id="yes" onclick="$('#inputhash').val('<%=sub1[i].h%>');">Review</button></td>
-                                        </tr>
-                                        <%}%>
-
-                                </tbody>
-                            </table>
-                            <%}%>
-                </div>
-
-
-
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <% if(sub2.length == 0){%>
-                        <center>
-                            <h6>No Papers yet</h6>
-                        </center>
-                        <%}else{%>
-                            <select id="domain" value="All">
-                                <option val="all" selected="">All</option>
-                                <option val="Machine Learning">Machine Learning</option>
-                                <option val="Blockchain">BlockChain</option>
-                                <option val="Cloud Computing">Cloud Computing</option>
-                                <option val="Artificial Intelligence">Artificial Intelligence</option>
-                                <option val="Cyber Security">Cyber Security</option>
-                                <option val="Computer Networks">Computer Networks</option>
-                                <option val="Digital Signal Processing">Digital Signal Processing</option>
-                    </select>
-
-                            <table class="table-fill" id="paper">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left" style="width:5%;">Sr. No. </th>
-                                        <th class="text-left">Hash Value</th>
-                                        <th class="text-left"> Domain</th>
-
-                                        <th class="text-left">Info</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-hover">
-                                    <%for(var i=0;i<sub2.length;i++){%>
-                                        <tr>
-                                            <td class="text-left" id="accuracy">
-                                                <%= i %>
-                                            </td>
-                                            <td class="text-left" id="hash">
-                                                <a target="_blank" href="http://localhost:8080/ipfs/<%=sub2[i].h%>">
-                                                    <%=sub2[i].h%>
-                                                </a>
-                                            </td>
-                                            <td class="text-left">
-                                                <%=sub2[i].domain%>
-                                            </td>
-                                            <td><a class="btn btn-sm btn-success" data-toggle="modal" data-target="#review-contents" id="yes" onclick="$('#marks').html('<%=sub2[i].reviews%>');$('#comments').html('<%=sub2[i].reviews%>');">Info</a></td>
-                                        </tr>
-                                        <%}%>
-
-
-                                </tbody>
-                            </table>
-                            <%}%>
-                </div>
-
-
-            </div>
+                        </tbody>
+                    </table>
+                    <%}%>
         </div>
     </div>
 
@@ -230,7 +150,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="form" action="/review" method="POST">
-                        <label>Hash Value : </label><input id="inputhash" type="text" name="hashvalue" value="" readonly>
+                        <label>Company Address : </label><input id="inputhash" type="text" name="company" value="" readonly>
                         <br>
                         <label>Marks: </label>
                         <input id="status" name="marks" type="number" max=10 min=0>
@@ -356,4 +276,4 @@
 
 </body>
 
-</html>
+</html

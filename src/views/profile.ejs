@@ -26,7 +26,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item" data-toggle="modal" data-target="#buyToken">
+                <!-- <li class="nav-item" data-toggle="modal" data-target="#buyToken">
                     <a class="nav-link" href="#">Buy SATs
                         </a>
                 </li>
@@ -37,7 +37,7 @@
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#">Become a Reviewer
                         </a>
-                </li>
+                </li> -->
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <a class="btn btn-success my-2 my-sm-0" id="btn-signin" href="/logout">Logout</a>
@@ -64,9 +64,7 @@
                         <%=user.email%>
                     </li>
                     <!-- <li class="list-group-item">Public Key : <%=user.address%></li>  -->
-                    <li class="list-group-item">Account Balance :
-                        <span id="balance"> <%=balance%></span> SAT
-                    </li>
+
                 </ul>
 
             </div>
@@ -84,35 +82,33 @@
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
             <br>
             <center>
-                <h3>My Submissions</h3>
+                <h3>Reviews</h3>
             </center>
             <br>
             <% if(sub.length == 0){%>
                 <center>
-                    <h6>You do not have any submissions</h6>
+                    <h6>You do not have any reviews</h6>
                 </center>
                 <%}else{%>
                     <table class="table-fill">
                         <thead>
                             <tr>
-                                <th class="text-left" style="width:60%;">Hash Value</th>
-                                <th class="text-left" style="width:20%;">Timestamp</th>
-                                <th class="text-left">Status</th>
+                                <th class="text-left" style="width:60%;">Reviewer Address</th>
+                                <th class="text-left" style="width:20%;">Review</th>
+                                <th class="text-left">Rating</th>
                             </tr>
                         </thead>
                         <tbody class="table-hover">
                             <%for(var i=0;i<sub.length;i++){%>
                                 <tr>
                                     <td class="text-left">
-                                        <a target="_blank" href="http://localhost:8080/ipfs/<%=sub[i].h%>">
-                                            <%=sub[i].h%>
-                                        </a>
+                                        <%=sub[i].owner%>
                                     </td>
                                     <td class="text-left" id="accuracy">
-                                        <%=details[i].timestamp%>
+                                        <%=sub[i].review%>
                                     </td>
                                     <td class="text-left" id="accuracy">
-                                        <%=sub[i].status%>
+                                        <%=sub[i].marks%>
                                     </td>
                                 </tr>
                                 <%}%>
@@ -122,7 +118,7 @@
                     <%}%>
 
         </div>
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
             $(document).ready(function() {
                 var balance = parseInt($('#balance').html());
                 if (balance < 100) {
@@ -131,18 +127,18 @@
                 }
 
             });
-        </script>
+        </script> -->
 
 
-        <div id="upload-doc">
-            <span>Upload</span>
+        <!-- <div id="upload-doc">
+            <span>Add Post</span>
             <button type="button" id="upload-button" data-toggle="modal" data-target="#exampleModal">
 			<h2>+</h2>
 		</button>
-        </div>
+        </div> -->
 
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -167,76 +163,32 @@
                             	<option val="Digital Signal Processing">Digital Signal Processing</option>
                             </select>
                             <br>
-                            <!--   -->
-                            <br>
-                            <input class="btn btn-danger btn-lg" id="btn-upload" type="submit" value="Confirm" />
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+                             -->
+        <!-- <br>
+        <input class="btn btn-danger btn-lg" id="btn-upload" type="submit" value="Confirm" />
+        </form> -->
+    </div>
+    </div>
+    </div>
+    </div> -->
 
-        <div class="modal fade" id="buyToken" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Buy SATs</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form" action="">
-                            <label>Buy Tokens: </label>
-                            <input id="buyT" name="buyT" type="number" max=100 min=1>
-                            <input class="btn btn-info btn-lg" id="btn-buy" type="button" value="Confirm" />
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="modal fade" id="sellToken" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Sell SATs</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form" action="/sellTokens" method="POST">
-                            <label>Sell Tokens: </label>
-                            <input id="sellT" name="sellT" type="number" max=<%=balance%> min=1>
-                            <input class="btn btn-info btn-lg" id="btn-sell" type="submit" value="Confirm" />
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-        <script type="text/javascript" src="js/navbar.js"></script>
-        <script type="text/javascript" src="js/upload.js"></script>
+    <script type="text/javascript" src="js/navbar.js"></script>
+    <script type="text/javascript" src="js/upload.js"></script>
 
-        <script type="text/javascript">
-            $("form").on("change", ".file-upload-field", function() {
-                $(this).parent(".file-upload-wrapper").attr("data-text", $(this).val().replace(/.*(\/|\\)/, ''));
-            });
-        </script>
+    <!-- <script type="text/javascript">
+        $("form").on("change", ".file-upload-field", function() {
+            $(this).parent(".file-upload-wrapper").attr("data-text", $(this).val().replace(/.*(\/|\\)/, ''));
+        });
+    </script> -->
 
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#btn-buy').click(function() {
-                    var x = $('#buyT').val();
-                    alert(x);
-                    $.post('/buyTokens', {
-                        data: x
-                    }, function(response) {
-                        window.location.reload();
-                    });
-                });
-            });
-        </script>
+
 </body>
 
 </html>

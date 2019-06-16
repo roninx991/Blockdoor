@@ -48,131 +48,24 @@ var p_router = function() {
                     console.log(error);
                 });
 
-                var count = 0;
-                var ans = new Array();
-                var ans1 = new Array();
                 const url = 'mongodb://localhost:27017';
 
 
                 mongodb.connect(url, { useNewUrlParser: true }, function(err, client) {
                     const db = client.db('NodeDemoWebApp');
                     const Submissions = db.collection('Submissions');
-                    const Reviews = db.collection('Reviews');
+                    const Users = db.collection('Users');
 
                     var review, review_content;
 
-                    MainContract.deployed().then(function(contractInstance) {
-                        contractInstance.displayDocCount().then(function(count) {
-                            count = parseInt(count);
-
-                            if (count > 0) {
-                                for (var i = 0; i < count; i++) {
-                                    contractInstance.displayHash(i).then(function(h) {
-                                        var hash = h;
-                                        contractInstance.isReviewed(hash).then(function(truth) {
-                                            if (!truth) {
-                                                contractInstance.hasReviewed(hash, req.user.address).then(function(answer) {
-                                                    console.log("Owner has reviewed: ", answer);
-                                                    if (!answer) {
-                                                        contractInstance.displaySubmissionStatus(hash).then(function(stat) {
-                                                            var s = {};
-                                                            if (stat == 1) {
-                                                                s.status = "Pending...";
-                                                                s.h = hash;
-
-                                                                Submissions.find({ "hash": hash }).toArray(function(err, pending) {
-                                                                    if (err == undefined) {
-                                                                        s.timestamp = pending[0].timestamp;
-                                                                        s.domain = pending[0].domain;
-                                                                    }
-
-                                                                });
-
-                                                                Reviews.find({ "hash": hash }).toArray(function(err, acceptreject) {
-                                                                    if (err == undefined) {
-                                                                        s.reviews = acceptreject;
-                                                                    }
-
-                                                                });
-                                                                ans.push(s);
-                                                            }
-                                                        });
-                                                    } else {
-                                                        contractInstance.displaySubmissionStatus(hash).then(function(stat) {
-                                                            var s = {};
-                                                            s.status = "Pending...";
-                                                            s.h = hash;
-
-                                                            Submissions.find({ "hash": hash }).toArray(function(err, pending) {
-                                                                if (err == undefined) {
-                                                                    s.timestamp = pending[0].timestamp;
-                                                                    s.domain = pending[0].domain;
-                                                                }
-                                                            });
-
-                                                            Reviews.find({ "hash": hash }).toArray(function(err, acceptreject) {
-                                                                if (err == undefined) {
-                                                                    s.reviews = acceptreject;
-                                                                }
-                                                            });
-
-                                                            ans1.push(s);
-                                                        });
-
-                                                    }
-                                                });
-                                            } else {
-                                                contractInstance.hasReviewed(hash, req.user.address).then(function(answer) {
-                                                    console.log("Owner has reviewed: ", answer);
-                                                    if (answer) {
-                                                        contractInstance.displaySubmissionStatus(hash).then(function(stat) {
-                                                            var s = {};
-                                                            if (stat == 2) {
-                                                                s.status = "Accepted";
-                                                                s.h = hash;
-                                                            } else {
-                                                                s.status = "Rejected";
-                                                                s.h = hash;
-                                                            }
-
-                                                            Submissions.find({ "hash": hash }).toArray(function(err, pending) {
-                                                                if (err == undefined) {
-                                                                    s.timestamp = pending[0].timestamp;
-                                                                    s.domain = pending[0].domain;
-                                                                }
-                                                            });
-
-                                                            Reviews.find({ "hash": hash }).toArray(function(err, acceptreject) {
-                                                                if (err == undefined) {
-                                                                    s.reviews = acceptreject;
-                                                                }
-                                                            });
-
-                                                            ans1.push(s);
-                                                        });
-                                                    }
-                                                });
-
-                                            }
-                                        })
-
-                                    });
-                                }
-                            }
-                        }).catch(function(e) {
-                            console.log("Error: ", e);
+                    Users.find({ "type": "0" }).toArray(function(err, result) {
+                        res.render('reviewer', {
+                            title: "SmartReviewer",
+                            navMenu: menu,
+                            user: req.user,
+                            sub1: result,
+                            balance: bal
                         });
-                        setTimeout(function() {
-                            res.render('reviewer', {
-                                title: "SmartReviewer",
-                                navMenu: menu,
-                                user: req.user,
-                                sub1: ans,
-                                sub2: ans1,
-                                balance: bal
-                            });
-                        }, 5000);
-
                     });
                 });
             }

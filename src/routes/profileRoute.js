@@ -37,82 +37,79 @@ var p_router = function(web3) {
                 res.redirect('/');
             } else {
 
-                const url = 'mongodb://localhost:27017';
-                mongodb.connect(url, { useNewUrlParser: true }, function(err, client) {
-                    const db = client.db('NodeDemoWebApp');
-                    const Submissions = db.collection('Submissions');
+                // const url = 'mongodb://localhost:27017';
+                // mongodb.connect(url, { useNewUrlParser: true }, function(err, client) {
+                //     const db = client.db('NodeDemoWebApp');
+                //     const Submissions = db.collection('Submissions');
 
-                    Submissions.find({ owner: req.user._id }).toArray(function(err, x) {
-                        if (err) {
-                            console.log("Error in finding user", err);
-                        } else {
-                            var bal = 0;
-                            SATContract.deployed().then(function(instance) {
-                                return instance.balanceOf.call(req.user.address);
+                // Submissions.find({ owner: req.user._id }).toArray(function(err, x) {
+                //     if (err) {
+                //         console.log("Error in finding user", err);
+                //     } else {
+                var count = 0;
+                var ans = new Array();
+                var data = {};
 
-                            }).then(function(result) {
-                                console.log("Balance is: ", result.toString());
-                                bal = result.toString();
+                MainContract.deployed().then(function(contractInstance) {
+                    contractInstance.getReviewCount.call().then(function(count) {
+                        console.log("Review Count: ", count);
 
-                            }, function(err) {
-                                console.log("Error in retreiving balance", err);
-                            });
+                        for (var i = 0; i < parseInt(count.toString()); i++) {
+                            contractInstance.getReviewHash.call(i).then(function(reviewHash) {
+                                console.log("Review Hash: ", reviewHash);
+                                contractInstance.getReviewCompany.call(reviewHash).then(function(company) {
+                                    console.log("Company: ", company);
+                                    contractInstance.getReviewBody.call(reviewHash).then(function(body) {
+                                        console.log("Review: ", body);
+                                        contractInstance.getReviewRating.call(reviewHash).then(function(rating) {
+                                            console.log("Rating: ", rating);
+                                            contractInstance.getReviewCreator.call(reviewHash).then(function(creator) {
+                                                console.log("Creator: ", creator);
+                                                if (company.toLowerCase() == req.user.address) {
 
-                            var count = 0;
-                            var ans = new Array();
+                                                    data.address = company;
+                                                    data.review = body;
+                                                    data.marks = rating;
+                                                    data.owner = creator;
+                                                    ans.push(data);
 
-                            MainContract.deployed().then(function(contractInstance) {
-                                contractInstance.displayDocCount().then(function(count) {
-                                    count = parseInt(count);
-                                    console.log("Submission Count: ", count);
-
-                                    if (count > 0) {
-                                        for (var i = 0; i < count; i++) {
-                                            contractInstance.displayHash(i).then(function(h) {
-                                                var hash = h;
-                                                console.log("Submission Hash: ", hash);
-                                                contractInstance.isOwner(req.user.address, hash).then(function(answer) {
-                                                    console.log("Submission Owner: ", answer);
-                                                    if (answer) {
-                                                        contractInstance.displaySubmissionStatus(hash).then(function(stat) {
-                                                            var s = {};
-                                                            if (stat == 1)
-                                                                s.status = "Pending...";
-                                                            else if (stat == 2)
-                                                                s.status = "Accepted...";
-                                                            else
-                                                                s.status = "Rejected";
-                                                            s.h = hash;
-                                                            ans.push(s);
-                                                        });
-                                                    }
-                                                });
+                                                }
+                                            }).catch(function(err) {
+                                                console.log("Error in getting creator: ", err);
                                             });
-                                        }
-                                    }
 
-
-                                }).catch(function(e) {
-                                    console.log("Error: ", e);
+                                        }).catch(function(err) {
+                                            console.log("Error in getting rating: ", err);
+                                        });
+                                    }).catch(function(err) {
+                                        console.log("Error in body: ", err);
+                                    });
+                                }).catch(function(err) {
+                                    console.log("Error in getting company: ", err);
                                 });
+                            }).catch(function(err) {
+                                console.log("Error in getting hash: ", err);
                             });
-
-
-                            setTimeout(function() {
-                                res.render('profile', {
-                                    title: "SmartReviewer",
-                                    navMenu: menu,
-                                    user: req.user,
-                                    balance: bal,
-                                    details: x,
-                                    sub: ans
-                                });
-
-                            }, 5000);
-
                         }
+                    }).catch(function(e) {
+                        console.log("Error: ", e);
                     });
                 });
+
+
+                setTimeout(function() {
+                    res.render('profile', {
+                        title: "SmartReviewer",
+                        navMenu: menu,
+                        user: req.user,
+                        sub: ans
+                    });
+
+                }, 5000);
+
+                //         })
+                //     });
+                // });
 
             }
         });

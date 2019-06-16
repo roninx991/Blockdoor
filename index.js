@@ -47,7 +47,7 @@ var registerRouter = require('./src/routes/registrationRoute')(web3);
 var profileRouter = require('./src/routes/profileRoute')(web3);
 var reviewerRouter = require('./src/routes/reviewerRoute')(web3);
 
-var uploadRouter = require('./src/routes/uploadRoute')(web3);
+//var uploadRouter = require('./src/routes/uploadRoute')(web3);
 var yesnoRouter = require('./src/routes/yesnoRoute')(web3);
 var buyTRouter = require('./src/routes/buyTRoute')(web3);
 var sellTRouter = require('./src/routes/sellTRoute')(web3);
@@ -58,7 +58,7 @@ app.use('/u', reviewerRouter);
 app.use('/p', profileRouter);
 
 app.use('/review', yesnoRouter);
-app.use('/upload', uploadRouter);
+//app.use('/upload', uploadRouter);
 app.use('/buyTokens', buyTRouter);
 app.use('/sellTokens', sellTRouter);
 
@@ -71,8 +71,8 @@ app.get('/', function(req, res) {
         res.redirect('/u');
     } else {
         res.render('index', {
-            title: "SmartReviewer",
-            heading: "The next generation conference paper reviewing system",
+            title: "Blockdoor",
+            heading: "The next generation decentralised reviewing system",
             navMenu: menu
         });
     }
